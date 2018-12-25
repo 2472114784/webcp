@@ -145,6 +145,39 @@ export function put(url,data = {}){
   })
 }
 
+function http(params) {
+  /***
+   * 检查请求数据
+   * @param params
+   * @returns {boolean}
+   */
+  function checkParams(params) {
+    if (!params) {
+      return false;
+    }
+    if (!(params.method in ['get', 'put', 'patch', 'post'])) {
+      return false;
+    }
+    if (!params.url) {
+      return false;
+    }
+    return true;
+  }
+
+  if (checkParams(params)) {
+    switch (params.method) {
+      case 'get':
+        return fetch(params.url, params.params);
+      case 'put':
+        return put(params.url, params.params);
+      case 'patch':
+        return patch(params.url, params.params);
+      case 'post':
+        return post(params.url, params.params);
+    }
+  }
+}
+
 /**
 * 下面是获取数据的接口
 */
