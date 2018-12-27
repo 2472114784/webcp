@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import App from './App'
 import VueRouter from 'vue-router'
-import initRouter from './common/router'
+import initRouter from './common/router/router'
 import Vuex from 'vuex'
-import initStore from './common/store'
+import initStore from './common/store/store'
 import ElementUI from 'element-ui'
 
 import 'element-ui/lib/theme-chalk/index.css'; // 引入element-ui 样式

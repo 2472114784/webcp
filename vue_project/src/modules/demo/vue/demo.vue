@@ -19,7 +19,7 @@
 <script>
   import { mapGetters } from 'vuex'
   import dateUtil from '../../../common/util/dateUtil'
-  import {server} from '../../../common/http-service.js'
+  import {server} from '../../../common/http/http.js'
   export default {
     computed:mapGetters({
       count:'getCount'

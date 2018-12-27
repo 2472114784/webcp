@@ -1,6 +1,6 @@
 import VueRouter from 'vue-router'
-import routerInterceptor from '../common/interceptor/routerInterceptor'
-import demoRouter from '../modules/demo/demo_router'
+import routerInterceptor from './routerInterceptor'
+import demoRouter from '../../modules/demo/demo_router'
 
 export default function () {
   // 路由配置
