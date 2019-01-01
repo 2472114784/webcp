@@ -1,18 +1,26 @@
 @import "theme";
 
-.base-layout {
+.global-main-layout {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
 }
 
-.base-layout-content {
-  min-width: 1200pt;
+.global-layout-width {
+  width: @globalWidth;
 }
-.bg-blue{
+
+.global-box-column-flex-start {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+.bg-blue {
   background: yellow;
 }
 
-.bg-gray{
+.bg-gray {
   background: @colorGray;
 }

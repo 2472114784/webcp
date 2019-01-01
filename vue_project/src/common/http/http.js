@@ -222,7 +222,19 @@ export const server = {
       }
     }
   },
+  lottery: function () {
+    return {
+      method: 'get',
+      url: '/getLotteryById',
+      data: {
+        'lottery_id': 30000,
+      }
+    }
+  },
   exam: function () {
     return http(this.banner());
+  },
+  examLottery: function () {
+    return http(this.lottery());
   }
 }
