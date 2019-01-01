@@ -11,7 +11,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "axios-model": "^1.0.2",
     "element-ui": "^2.3.2",
+    "js-model": "^1.6.1",
     "less": "^3.0.1",
     "less-loader": "^4.1.0",
     "style-loader": "^0.20.3",
