@@ -1,4 +1,4 @@
-import Home from '../Home'
+import Home from '../HomeView'
 import HomeContent from '../component/content/home/HomeContent'
 import LotteryContent from '../component/content/lottery/LotteryContent'
 

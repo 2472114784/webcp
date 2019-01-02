@@ -19,9 +19,7 @@
       http_banner: function () {
         this.$server.exam().then(data => this.data_banner = data)
       },
-      changeData: function () {
-        this.data_banner.data = [{bannerUrl: 'wwww'}, {bannerUrl: 'wwww'}, {bannerUrl: 'wwww'}, {bannerUrl: 'wwww'}];
-      }
+
     },
     mounted() {
       this.http_banner();

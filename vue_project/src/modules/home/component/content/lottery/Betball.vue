@@ -54,7 +54,7 @@
 </script>
 <style lang="less" scoped>
 
-  .bet-ball-normal {
+  .bet-ball-normal:extend(.global-font-normal-extra-light-dark) {
     display: inline-flex;
     justify-content: center;
     border-radius: 50%;
@@ -62,9 +62,7 @@
     height: 30pt;
     margin: 3pt;
     align-items: center;
-    font-size: 15pt;
     border: 2px solid #cdcdcd;
-    color: #666666;
     background-color: #f0f0f0;
   }
 
