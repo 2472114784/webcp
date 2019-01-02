@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.lotteryItemBall" id="bet_ball"
-       :class="['bet-ball-normal',{'bet-ball-clicked':isClicked},{'bet-ball-hover':!isClicked&&isMouseOver}]"
+       :class="['bet-ball-normal',{'bet-ball-clicked':this.lotteryItemBall.selected},{'bet-ball-hover':!this.lotteryItemBall.selected&&isMouseOver}]"
        @click="change" @mouseover="mouseOverStatus" @mouseout="mouseOutStatus">
     <p>{{this.lotteryItemBall.lotteryItemName}}</p>
   </div>
@@ -32,29 +32,25 @@
     },
     data() {
       return {
-        'isClicked': false,
-        'isMouseOver': false
+        isMouseOver: false
       }
     },
     methods: {
       change: function () {
-        this.isClicked = !this.isClicked;
-        console.log("isClicked", this.isClicked);
+        this.lotteryItemBall.selected = !this.lotteryItemBall.selected;
       },
       mouseOverStatus: function () {
         this.isMouseOver = true;
-        console.log("进入", this.isMouseOver);
       },
       mouseOutStatus: function () {
         this.isMouseOver = false;
-        console.log("离开", this.isMouseOver);
       }
     }
   }
 </script>
 <style lang="less" scoped>
 
-  .bet-ball-normal:extend(.global-font-normal-gray) {
+  .bet-ball-normal:extend(.global-font-big-gray) {
     display: inline-flex;
     justify-content: center;
     border-radius: 50%;
