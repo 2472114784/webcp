@@ -54,7 +54,7 @@
 </script>
 <style lang="less" scoped>
 
-  .bet-ball-normal:extend(.global-font-normal-extra-light-dark) {
+  .bet-ball-normal:extend(.global-font-normal-gray) {
     display: inline-flex;
     justify-content: center;
     border-radius: 50%;
@@ -62,8 +62,8 @@
     height: 30pt;
     margin: 3pt;
     align-items: center;
-    border: 2px solid #cdcdcd;
-    background-color: #f0f0f0;
+    border: 2px solid @globalGray;
+    background-color: @globalLightGray;
   }
 
   .bet-ball-clicked {
