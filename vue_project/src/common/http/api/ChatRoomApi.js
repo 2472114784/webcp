@@ -1,4 +1,39 @@
 //TODO
+/**
+ * 此处替换成您的appKey
+ * */
+export const appKey = "z3v5yqkbz1jv0";
+/**
+ * 此处替换成您的appSecret
+ * */
+export const appSecret = "KuuOMpJM9w";
+/**
+ * 自定义api地址
+ * */
+export const api = "http://api.cn.ronghub.com";
+/**
+ * 禁言时间 单位：分钟
+ */
+export const GAG_MUNITE = 40000;
+
+/**
+ * 频道类型
+ */
+export const ROOM_CHANNEL_TYPE_CHAT = 0;//融云聊天
+export const ROOM_CHANNEL_TYPE_LIVE = 1;//融云直播
+/**
+ * 频道角色
+ */
+export const ROOM_CHANNEL_RULE_BROADCASTER = 1;//主播
+export const ROOM_CHANNEL_RULE_CLIENT = 2;//观众
+/**
+ * 红包超时时间
+ */
+export const RED_PACKET_TIMEOVER = 86400000;
+/**
+ * 红包默认remark
+ */
+export const RED_PACKET_DEFAULT_REMARK = "恭喜发财,好运连绵";
 export const ChatRoomApi = {
   getRoomToken: function () {
     return {
