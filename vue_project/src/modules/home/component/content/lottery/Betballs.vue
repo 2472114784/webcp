@@ -1,7 +1,10 @@
 <template>
-  <div id="bet_balls" v-if="lotteryBalls">
-    <v-betball v-for="(item,index) in lotteryBalls.lotteryItemEntityList" :key='index' :lotteryItemBall='item'/>
+  <div id="bet_balls">
+    <div class="global-flex-row-content-start-items-center">
+      <v-betball v-for="(item,index) in this.lotteryBalls.lotteryItemEntityList" :key='index' :lotteryItemBall='item'/>
+    </div>
   </div>
+
 </template>
 <script>
   import betball from "./Betball";
@@ -9,16 +12,7 @@
   export default {
     name: 'betballs',
     props: {
-      'lotteryBalls': {
-        'lotteryChildId': 0,
-        'lotteryChildName': String,
-        'desc': String,
-        'lotteryChildType': 0,
-        'lotteryChildDuplexNum': 0,
-        'odds': 0,
-        'money': 0,
-        'lotteryItemEntityList': Array
-      }
+      lotteryBalls: Array,
     },
     data() {
       return {}
@@ -29,12 +23,6 @@
   }
 </script>
 <style scoped>
-  #bet_balls {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    background-color: aquamarine;
-  }
 </style>
 
 
