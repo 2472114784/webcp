@@ -11,7 +11,7 @@
   export default {
     data() {
       return {
-        'lotteryData': null,
+        lotteryData: null,
       }
     },
     components: {

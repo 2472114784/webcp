@@ -1,7 +1,7 @@
 <template>
   <div v-if="this.lotteryItemBall" id="bet_ball"
        :class="['bet-ball-normal',{'bet-ball-clicked':isClicked},{'bet-ball-hover':!isClicked&&isMouseOver}]"
-       @click="change" @mouseover="mouseOverStatus" @mouseout="mouseOutStatus">
+       @click="selectedChange" @mouseover="mouseOverStatus" @mouseout="mouseOutStatus">
     <p>{{this.lotteryItemBall.lotteryItemName}}</p>
   </div>
 </template>
@@ -37,7 +37,7 @@
       }
     },
     methods: {
-      change: function () {
+      selectedChange: function () {
         this.isClicked = !this.isClicked;
         console.log("isClicked", this.isClicked);
       },
