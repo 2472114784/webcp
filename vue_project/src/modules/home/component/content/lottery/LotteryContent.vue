@@ -1,17 +1,18 @@
 <template>
   <div id="lottery-content" class="global-box-column-flex-start global-layout-width">
     <div id="balls">
-      <v-betballs v-for="(item,index) in lotteryData" :lotteryBalls="item" :key="index"/>
+      <v-betballs v-for="(item,index) in this.orderList" :lotteryBalls="item" :key="index"/>
     </div>
   </div>
 </template>
 <script>
   import betballs from './Betballs'
-
+  import dataUtils from '../../../../../common/util/DataUtils'
   export default {
     data() {
       return {
         lotteryData: null,
+        orderList: Array,
       }
     },
     components: {
@@ -20,10 +21,10 @@
     methods: {
       http_lottery: function () {
         this.$server.examLottery().then(data => {
-          console.log("data数据", data);
-          this.lotteryData = data.lotteryChilds;
-          console.log("数据", this.lotteryData);
-
+          this.lotteryData = data.lotteryChilds[0];
+          this.orderList = dataUtils.createLotteryChildChooseData(this.lotteryData);
+          data.lotteryChilds[0].orderList = this.orderList;
+          console.log("orderList", this.orderList, "child", this.lotteryData)
         })
       }
     },

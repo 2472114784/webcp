@@ -368,3 +368,6 @@ class OtherFn {
     }
   }
 }
+
+const otherFn = new OtherFn();
+export default otherFn;

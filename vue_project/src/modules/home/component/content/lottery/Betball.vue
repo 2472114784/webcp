@@ -53,7 +53,6 @@
   }
 </script>
 <style lang="less" scoped>
-
   .bet-ball-normal:extend(.global-font-normal-gray) {
     display: inline-flex;
     justify-content: center;
