@@ -10,7 +10,9 @@ axios.interceptors.request.use(
   config => {
     config.data = JSON.stringify(config.data);
     config.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      // "Content-Type": "application/json",
+      'token': '22E1CEDCD53248ABB79CB734C5EC9405',
     }
     return config;
   },
@@ -163,7 +165,7 @@ function handlerResponse(resolve, reject, result) {
   }
 }
 
-function http(params) {
+export function http(params) {
   if (checkParams(params)) {
     let httpObj;
     switch (params.method) {

@@ -1,5 +1,5 @@
 //TODO
-export const ReportApi = {
+export default {
   getListReportByUserId: function (page) {
     return {
       method: 'get',

@@ -24,7 +24,7 @@ export const CHANNEL_TYPE_WITHDRAW = 1;
 export const CHANNEL_TYPE_RECHARGE = 2;
 
 
-export const MoneyOrderApi = {
+export default {
   createMoneyOrder: function (password, channelId, orderType, money, orderUserName, orderCertificate) {
     return {
       method: 'get',

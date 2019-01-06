@@ -8,6 +8,7 @@
   </div>
 </template>
 <script>
+  import BannerApi from '../../../../../common/http/api/BannerApi'
   export default {
     name: "banner",
     data() {
@@ -17,7 +18,7 @@
     },
     methods: {
       http_banner: function () {
-        this.$server.exam().then(data => this.data_banner = data)
+        this.$http(BannerApi.banner).then(data => this.data_banner = data)
       },
 
     },

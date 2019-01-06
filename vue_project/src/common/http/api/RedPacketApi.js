@@ -1,5 +1,5 @@
 //TODO
-export const RedPacketApi = {
+export default {
   sendRedPacket: function (password, type, money, num, remark) {
     return {
       method: 'get',

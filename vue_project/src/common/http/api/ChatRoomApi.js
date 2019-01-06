@@ -34,7 +34,7 @@ export const RED_PACKET_TIMEOVER = 86400000;
  * 红包默认remark
  */
 export const RED_PACKET_DEFAULT_REMARK = "恭喜发财,好运连绵";
-export const ChatRoomApi = {
+export default {
   getRoomToken: function () {
     return {
       method: 'get',

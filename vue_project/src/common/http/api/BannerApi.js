@@ -1,7 +1,7 @@
 export const BANNER_TYPE_URL = 0;//http跳转
 export const BANNER_TYPE_ACTION = 1;//应用内action
 
-export const bannerApi = {
+export default {
   /**
    * 获取banner数据
    * @param a

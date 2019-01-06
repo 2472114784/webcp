@@ -18,7 +18,7 @@ export const TOKEN_EFFECTIVE_TIME = 10 * 365 * 24 * 60 * 60 * 1000;
  * 请求地址前缀
  */
 export const BUCKET_HTTP_PRE = "http://pflfreg6m.bkt.clouddn.com/";
-export const QiniuApi = {
+export default {
   getQiniuToken: function (accessKey) {
     return {
       method: 'get',

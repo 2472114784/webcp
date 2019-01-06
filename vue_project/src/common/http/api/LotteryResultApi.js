@@ -1,5 +1,5 @@
 //TODO
-export const LotteryResultApi = {
+export default {
   getListLotteryResultByLotteryId: function (lotteryId, page) {
     return {
       method: 'get',

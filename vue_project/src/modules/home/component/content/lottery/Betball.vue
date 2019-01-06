@@ -1,6 +1,6 @@
 <template>
   <div v-if="this.lotteryItemBall" id="bet_ball"
-       :class="['bet-ball-normal',{'bet-ball-clicked':isClicked},{'bet-ball-hover':!isClicked&&isMouseOver}]"
+       :class="['bet-ball-normal',{'bet-ball-clicked':this.lotteryItemBall.selected},{'bet-ball-hover':!this.lotteryItemBall.selected&&isMouseOver}]"
        @click="selectedChange" @mouseover="mouseOverStatus" @mouseout="mouseOutStatus">
     <p>{{this.lotteryItemBall.lotteryItemName}}</p>
   </div>
@@ -17,37 +17,33 @@
   export default {
     name: 'betball',
     props: {
-      'lotteryItemBall': {
-        'lotteryItemId': 0,
-        'lotteryItemName': String,
-        'desc': String,
-        'lotteryItemValue': String,
-        'lotteryDuplexNum': 0,
-        'money': 0,
-        'selected': false,
-        'odds': 0,
-        'lotteryOrderNum': 0,
-        'lotteryChildType': 0,
+      lotteryItemBall: {
+        lotteryItemId: 0,
+        lotteryItemName: String,
+        desc: String,
+        lotteryItemValue: String,
+        lotteryDuplexNum: 0,
+        money: 0,
+        selected: false,
+        odds: 0,
+        lotteryOrderNum: 0,
+        lotteryChildType: 0,
       }
     },
     data() {
       return {
-        'isClicked': false,
-        'isMouseOver': false
+        isMouseOver: false
       }
     },
     methods: {
       selectedChange: function () {
-        this.isClicked = !this.isClicked;
-        console.log("isClicked", this.isClicked);
+        this.lotteryItemBall.selected = !this.lotteryItemBall.selected;
       },
       mouseOverStatus: function () {
         this.isMouseOver = true;
-        console.log("进入", this.isMouseOver);
       },
       mouseOutStatus: function () {
         this.isMouseOver = false;
-        console.log("离开", this.isMouseOver);
       }
     }
   }

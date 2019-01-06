@@ -21,7 +21,7 @@ export const RECODE_TIXIAN = 2;//提现
 export const RECODE_PERSON_CHONGZHI = 3;//人工充值
 export const RECODE_BANK_CHONGZHI = 4;//银行卡充值
 
-export const UserApi = {
+export default {
   register: function (account, password, inviteCode) {
     return {
       method: 'get',

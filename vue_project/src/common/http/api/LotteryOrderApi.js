@@ -25,6 +25,7 @@ export const TIME_TYPE_START_OF_TIME = 2;//可以下单
 /**
  * 订单状态
  */
+export const ORDER_STATUS_ALL = 0;  // 全部订单
 export const ORDER_STATUS_PENDING = 1;  // 待开奖订单
 export const ORDER_STATUS_COMPLETED_WIN = 2;  // 已兑奖订单(中奖)
 export const ORDER_STATUS_COMPLETED_LOSE = 3;  // 已兑奖订单（未中奖）
@@ -43,7 +44,7 @@ export const LOTTERY_CHILD_TYPE_NORMAL = 0;
 export const LOTTERY_CHILD_TYPE_DUPLEX = 1;
 export const LOTTERY_CHILD_TYPE_POSITION = 2;//定位
 
-export const LotteryOrderApi = {
+export default {
   /**
    *  创建订单
    * @param requestTime 请求时间（需同步时间）
