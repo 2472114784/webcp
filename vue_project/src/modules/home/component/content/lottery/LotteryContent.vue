@@ -1,5 +1,6 @@
 <template>
   <div id="lottery-content" class="global-box-column-flex-start global-layout-width">
+    <v-login/>
     <v-lottery-order/>
     <!--<v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"-->
     <!--:changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>-->
@@ -16,6 +17,7 @@
   import LotteryMenuItemView from './LotteryMenuItemView'
   import LotteryOrderView from '../../../../lottery/lotteryOrder/LotteryOrderView'
   import LotteryOrderApi from '../../../../../common/http/api/LotteryOrderApi'
+  import LoginView from '../../../../login/login/LoginView'
   export default {
     data() {
       return {
@@ -29,6 +31,7 @@
       'v-lottery-menu': LotteryMenuView,
       'v-lottery-menu-item': LotteryMenuItemView,
       'v-lottery-order': LotteryOrderView,
+      'v-login': LoginView,
     },
     methods: {
       http_lottery: function () {

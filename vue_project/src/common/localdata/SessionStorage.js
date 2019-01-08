@@ -1,11 +1,11 @@
 import VueSessionStorage from 'vue-sessionstorage'
 
-class VueSessionStorage {
+class SessionStorage {
   init = function (Vue) {
     Vue.use(VueSessionStorage)
 
   }
 }
 
-export default new VueSessionStorage();
+export default new SessionStorage();
 

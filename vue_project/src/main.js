@@ -27,7 +27,7 @@ LocalDataManager.init(Vue);//初始化本地缓存
 Vue.config.productionTip = false
 Vue.prototype.$http = http;
 Vue.prototype.$EventBus = EventBus;
-new Vue({
+export default new Vue({
   el: '#app',
   router,
   store,

@@ -1,5 +1,3 @@
-import Vue from "vue/types/vue";
-import {http} from "../http/http";
 
 /**
  * localstorage，H5，本地存储工具类，H5的localstorage大小只有5M，要珍惜使用~！！！
