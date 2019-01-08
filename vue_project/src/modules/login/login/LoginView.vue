@@ -11,20 +11,33 @@
       clearable>
     </el-input>
     <el-button type="primary" @click="httpLogin(account,password)">登录</el-button>
-
+    <el-button type="primary" @click="seeUser">查看</el-button>
+    <p>{{user}}</p>
   </div>
 </template>
 
 <script>
+  import {mapState, mapActions} from 'vuex'
   import UserApi from '../../../common/http/api/UserApi'
   import {Message, Loading} from 'element-ui';
   import {KEY_USER} from '../../../common/localdata/KeyStorage'
+  import {KEY_SET_USER} from '../../../common/store/modules/UserStoreModule'
+
   export default {
     name: "LoginView",
     data() {
       return {
-        account: "",
-        password: "",
+        account: "123456",
+        password: "123456",
+        // user:this.$store.state.UserStoreModule.state.user
+      }
+    },
+    computed: {
+      // ...mapState({
+      //   user: state => state.UserStoreModule.state.user,
+      // })
+      user: function () {
+        return this.$store.state.UserStoreModule.user
       }
     },
     methods: {
@@ -45,9 +58,15 @@
           console.log("登录成功", data);
           this.$session.set(KEY_USER, data);
           console.log("get", this.$session.get(KEY_USER));
+          this.$store.commit('UserStoreModule/setUser', data);
         })
+      },
+      seeUser: function () {
+        console.log("查看")
+        console.log('user', this.user);
       }
-    }
+    },
+
   }
 </script>
 

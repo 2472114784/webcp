@@ -1,11 +1,18 @@
 import Vuex from 'vuex'
 import { sync } from 'vuex-router-sync'
-import plugins from './globle/storePlugin'
+import plugins from './modules/storePlugin'
+import GlobalStoreModule from './modules/GlobalStoreModule'
+import UserStoreModule from './modules/UserStoreModule'
 
 
 export default function (router){
   const store = new Vuex.Store({
-    plugins
+    modules: {
+      GlobalStoreModule,
+      UserStoreModule
+    },
+    // strict: debug,
+    plugins: plugins
   });
 
   //加载各个模块的状态
