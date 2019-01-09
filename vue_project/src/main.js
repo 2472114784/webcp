@@ -8,6 +8,7 @@ import ElementUI from 'element-ui'
 import {http} from './common/http/http'
 import {EventBus} from './common/eventbus/EventBus'
 import LocalDataManager from './common/localdata/LocalDataManager'
+import DataManager from './common/dataManager/DataManager'
 
 
 import 'element-ui/lib/theme-chalk/index.css'; // 引入element-ui 样式
@@ -24,6 +25,7 @@ const store = initStore(router); //初始化状态，加载各个模块的状态
 
 LocalDataManager.init(Vue);//初始化本地缓存
 
+
 Vue.config.productionTip = false
 Vue.prototype.$http = http;
 Vue.prototype.$EventBus = EventBus;
@@ -31,6 +33,9 @@ export default new Vue({
   el: '#app',
   router,
   store,
+  created() {
+    DataManager.init(this.$session, this.$store)
+  },
   components: { App },
   template: '<App/>'
 });

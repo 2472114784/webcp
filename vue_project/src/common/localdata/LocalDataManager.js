@@ -1,5 +1,5 @@
 import LocalStorage from './LocalStorage'
-import SessionStorage from './SessionStorage'
+import SessionStorage from './session/SessionStorage'
 
 class LocalDataManager {
   init = function (Vue) {

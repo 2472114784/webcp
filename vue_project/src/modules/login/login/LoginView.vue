@@ -17,19 +17,15 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex'
   import UserApi from '../../../common/http/api/UserApi'
   import {Message, Loading} from 'element-ui';
-  import {KEY_USER} from '../../../common/localdata/KeyStorage'
-  import {KEY_SET_USER} from '../../../common/store/modules/UserStoreModule'
-
+  import UserManager from '../../../common/dataManager/module/UserManager'
   export default {
     name: "LoginView",
     data() {
       return {
         account: "123456",
         password: "123456",
-        // user:this.$store.state.UserStoreModule.state.user
       }
     },
     computed: {
@@ -37,7 +33,7 @@
       //   user: state => state.UserStoreModule.state.user,
       // })
       user: function () {
-        return this.$store.state.UserStoreModule.user
+        return UserManager.getStateUser();
       }
     },
     methods: {
@@ -56,9 +52,8 @@
         this.$http(UserApi.login(account, password)).then(data => {
           //存储user信息
           console.log("登录成功", data);
-          this.$session.set(KEY_USER, data);
-          console.log("get", this.$session.get(KEY_USER));
-          this.$store.commit('UserStoreModule/setUser', data);
+          UserManager.setUser(data);
+          console.log("get", UserManager.getUser());
         })
       },
       seeUser: function () {
