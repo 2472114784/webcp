@@ -14,6 +14,7 @@ import DataManager from './common/dataManager/DataManager'
 import 'element-ui/lib/theme-chalk/index.css'; // 引入element-ui 样式
 import 'element-ui/lib/theme-chalk/display.css'// 引入element-ui 样式
 
+
 require('!style-loader!css-loader!less-loader!./assets/style/global.less'); //导入全局样式
 
 Vue.use(ElementUI);
