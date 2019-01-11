@@ -1,39 +1,46 @@
 <template>
-  <div class="global-flex-column-content-center container">
-    <el-input
-      placeholder="请输入账号"
-      v-model="account"
-      clearable>
-    </el-input>
-    <el-input
-      placeholder="请输入密码"
-      v-model="password"
-      clearable>
-    </el-input>
-    <el-button type="primary" @click="httpLogin(account,password)">登录</el-button>
-    <el-button type="primary" @click="seeUser">查看</el-button>
-    <p>{{user}}</p>
-  </div>
+  <el-dialog
+    title="登录"
+    :visible.sync="centerDialogVisible"
+    width="300pt"
+    center>
+    <div class="global-flex-column-content-center container">
+      <el-input
+        placeholder="请输入账号"
+        v-model="account"
+        clearable>
+      </el-input>
+      <el-input
+        placeholder="请输入密码"
+        v-model="password"
+        clearable>
+      </el-input>
+      <el-button type="primary" @click="httpLogin(account,password)">登录</el-button>
+    </div>
+  </el-dialog>
+
 </template>
 
 <script>
   import UserApi from '../../../common/http/api/UserApi'
   import {Message, Loading} from 'element-ui';
   import UserManager from '../../../common/dataManager/module/UserManager'
+
   export default {
     name: "LoginView",
     data() {
       return {
         account: "123456",
         password: "123456",
+        checkLogin: true,
       }
     },
     computed: {
       // ...mapState({
       //   user: state => state.UserStoreModule.state.user,
       // })
-      user: function () {
-        return UserManager.getStateUser();
+      centerDialogVisible: function () {
+        return !UserManager.getStateUser() && this.checkLogin;
       }
     },
     methods: {
@@ -54,6 +61,9 @@
           console.log("登录成功", data);
           UserManager.setUser(data);
           console.log("get", UserManager.getUser());
+        }).catch(data => {
+          console.log("resson", data);
+          Message.error(data.msg)
         })
       },
       seeUser: function () {
@@ -67,8 +77,10 @@
 
 <style lang="less" scoped>
   .container {
-    width: 300pt;
-    height: 300pt;
     border: white solid 5pt;
+  }
+
+  .el-input {
+    margin-bottom: 20pt;
   }
 </style>
