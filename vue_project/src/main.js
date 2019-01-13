@@ -9,6 +9,7 @@ import {http} from './common/http/http'
 import {EventBus} from './common/eventbus/EventBus'
 import LocalDataManager from './common/localdata/LocalDataManager'
 import DataManager from './common/dataManager/DataManager'
+import IMModule from './common/im/IMModule'
 
 
 import 'element-ui/lib/theme-chalk/index.css'; // 引入element-ui 样式
@@ -35,7 +36,8 @@ export default new Vue({
   router,
   store,
   created() {
-    DataManager.init(this.$session, this.$store)
+    DataManager.init(this.$session, this.$store);
+    IMModule.initVue(this);
   },
   components: { App },
   template: '<App/>'
