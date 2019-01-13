@@ -4,18 +4,8 @@
     :data="lotteryResult"
     style="width: 100%">
     <el-table-column
-      prop="lotteryId"
-      label="彩种"
-      width="180">
-    </el-table-column>
-    <el-table-column
       prop="openNo"
       label="期号"
-      width="180">
-    </el-table-column>
-    <el-table-column
-      prop="openDate"
-      label="开奖时间"
       width="180">
     </el-table-column>
     <el-table-column
@@ -45,6 +35,48 @@
     data() {
       return {
         lotteryResult: [],
+      }
+    },
+    computed: {
+      computeTotal: function () {
+        let total = 0;
+        let result = this.lotteryResult.openResult;
+        console.log("开奖结果result：", result, typeof result);
+        let arrStr = result.split(",");
+        for (let i = 0; i < arrStr.length; i++) {
+          total += parseInt(arrStr[i]);
+        }
+        return total;
+      },
+      computeDaXiao: function () {
+        let result = "";
+        let computeTotal = this.computeTotal();
+        if (computeTotal > 22) {
+          result = "大";
+        } else {
+          result = "小";
+        }
+        return result;
+      },
+      computeDanShuang: function () {
+        let result = "";
+        let computeTotal = this.computeTotal();
+        if (computeTotal % 2 == 0) {
+          result = "双";
+        } else {
+          result = "单";
+        }
+        return result;
+      },
+      computeLongHu: function () {
+        let result = "";
+        let computeTotal = this.computeTotal();
+        if (computeTotal > 22) {
+          result = "龙";
+        } else {
+          result = "虎";
+        }
+        return result;
       }
     },
     methods: {

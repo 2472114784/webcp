@@ -1,9 +1,10 @@
 <template>
-  <div id="bet_balls">
-    <v-betball-menu :changeIndexCallback="this.changeIndexCallback"/>
-    <div class="global-flex-row-content-start-items-center">
+  <div id="bet_balls" class="global-flex-row-content-start-items-center ">
+    <div class="global-flex-row-content-start-items-center betball-ball-container">
       <v-betball v-for="(item,index) in this.lotteryBalls" :key='index' :lotteryItemBall='item'/>
     </div>
+    <v-betball-menu :changeIndexCallback="this.changeIndexCallback"/>
+
   </div>
 
 </template>
@@ -85,7 +86,11 @@
 
   }
 </script>
-<style scoped>
+<style lang="less" scoped>
+  .betball-ball-container {
+    width: 500pt;
+  }
+
 </style>
 
 

@@ -2,41 +2,34 @@
   <div>
     <el-table
       :data="lotteryOrderEntity"
-      style="width: 900pt">
+      style="width: 100%">
       <el-table-column
         prop="createTime"
-        label="创建时间"
-        width="200">
+        label="创建时间">
       </el-table-column>
       <el-table-column
         prop="lotteryTypeName"
-        label="彩种"
-        width="100">
+        label="彩种">
       </el-table-column>
       <el-table-column
         prop="lotteryChildName"
-        label="类型"
-        width="100">
+        label="类型">
       </el-table-column>
       <el-table-column
         prop="lotteryNo"
-        label="期数"
-        width="100">
+        label="期数">
       </el-table-column>
       <el-table-column
         prop="lotteryResult"
-        label="开奖号码"
-        width="100">
+        label="开奖号码">
       </el-table-column>
       <el-table-column
         prop="lotteryValue"
-        label="选择"
-        width="100">
+        label="选择">
       </el-table-column>
       <el-table-column
         prop="totalMoney"
-        label="总金额"
-        width="100">
+        label="总金额">
       </el-table-column>
       <el-table-column
         prop="orderStatus"

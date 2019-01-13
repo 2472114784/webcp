@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {Message, Loading} from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import TimeManager from '../serverTime/TimeManager'
 
 axios.defaults.timeout = 5000;
 axios.defaults.baseURL = 'http://47.75.241.94:8080/cpapi'; //填写域名
@@ -158,6 +159,7 @@ export function put(url, data = {}) {
 function handlerResponse(resolve, reject, result) {
   if (result.code == 200) {
     //成功
+    TimeManager.setServerTime(result.serverTime);
     resolve(result.data);
   } else {
     //失败

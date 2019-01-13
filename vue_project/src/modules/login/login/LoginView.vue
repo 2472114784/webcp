@@ -1,13 +1,14 @@
 <template>
   <el-dialog
     title="登录"
-    :visible.sync="centerDialogVisible"
+    :visible.sync="checkLogin"
     width="300pt"
     center>
     <div class="global-flex-column-content-center container">
       <el-input
         placeholder="请输入账号"
         v-model="account"
+        prefix-icon=""
         clearable>
       </el-input>
       <el-input
@@ -32,16 +33,14 @@
       return {
         account: "123456",
         password: "123456",
-        checkLogin: true,
+        checkLogin: false,
       }
     },
     computed: {
       // ...mapState({
       //   user: state => state.UserStoreModule.state.user,
       // })
-      centerDialogVisible: function () {
-        return !UserManager.getStateUser() && this.checkLogin;
-      }
+
     },
     methods: {
       httpLogin: function (account, password) {
@@ -66,10 +65,6 @@
           Message.error(data.msg)
         })
       },
-      seeUser: function () {
-        console.log("查看")
-        console.log('user', this.user);
-      }
     },
 
   }

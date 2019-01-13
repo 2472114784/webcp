@@ -1,3 +1,4 @@
+import TimeManager from '../../../common/serverTime/TimeManager'
 /**
  * 订单样式
  */
@@ -51,12 +52,12 @@ export default {
    * @param orders  json
    * @returns {{method: string, data: {request_time: *, orders: *}, url: string}}
    */
-  createLotteryOrder: function (requestTime, orders) {
+  createLotteryOrder: function (orders) {
     return {
       method: 'get',
       url: '/createLotteryOrder',
       data: {
-        'request_time': requestTime,
+        'request_time': TimeManager.getServerTime(),
         'orders': orders,
       }
     }
