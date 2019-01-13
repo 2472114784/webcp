@@ -1,9 +1,9 @@
 <template>
   <div id="lottery-content" class="global-box-column-flex-start global-layout-width">
     <v-login/>
-    <div class="global-flex-row-content-start">
+    <!--<div class="global-flex-row-content-start">
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
-    </div>
+    </div>-->
     <v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"
                     :changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>
     <div class="global-flex-row-content-start">
@@ -38,6 +38,7 @@
   import UnitView, {TYPE_YUAN, TYPE_JIAO, TYPE_FEN} from './UnitView'
   import NumView from './NumView'
   import LotteryClassItemView from '../../../../lottery/lotteryClassView/LotteryClassItemView'
+  import IMModule from '../../../../../common/im/IMModule'
 
   export default {
     data() {
@@ -125,7 +126,7 @@
        * 添加订单
        */
       addOrder: function () {
-
+        IMModule.connect();
       }
 
 
@@ -133,6 +134,7 @@
     mounted() {
       this.http_lottery();
       console.log("请求数据");
+      IMModule.init()
     }
   }
 </script>

@@ -33,7 +33,7 @@
       return {
         account: "123456",
         password: "123456",
-        checkLogin: false,
+        checkLogin: true,
       }
     },
     computed: {
