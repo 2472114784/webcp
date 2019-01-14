@@ -45,6 +45,9 @@
           case 2://购彩
             this.$router.push('/lottery')
             break;
+          case 3:
+            this.$router.push('/chat')
+            break;
           default:
             break;
         }
