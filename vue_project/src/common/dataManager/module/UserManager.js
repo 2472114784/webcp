@@ -24,6 +24,14 @@ class UserManager {
   getStateUser() {
     return this.mStore.state.UserStoreModule.user
   }
+
+  isLogin() {
+    return this.getUser()
+  }
+
+  hasImToken() {
+    return this.getUser() && this.getUser().rongToken;
+  }
 }
 
 export default new UserManager();

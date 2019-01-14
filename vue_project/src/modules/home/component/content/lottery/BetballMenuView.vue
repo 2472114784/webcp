@@ -1,6 +1,7 @@
 <template>
-  <div class="global-flex-row-content-center-items-center">
-    <p v-for="(item,index) in menu" :key="index" @click="changeIndex(index)">{{item}}</p>
+  <div class="global-flex-row-content-center-items-center betball-container">
+    <p class="global-font-normal-white betball-item" v-for="(item,index) in menu" :key="index"
+       @click="changeIndex(index)">{{item}}</p>
   </div>
 </template>
 
@@ -24,17 +25,25 @@
     methods: {
       changeIndex: function (index) {
         this.checkIndex = index;
-        console.log(this.checkIndex)
-        // if (this.changeIndexCallback) {
-        console.log("回调")
-        // this.$EventBus.$emit('change', this.checkIndex);
         this.changeIndexCallback(this.checkIndex);
-        // }
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .betball-container {
+    height: 20pt;
+    border-radius: 10pt;
+    background-color: @globalGray;
+  }
 
+  .betball-item {
+    width: 50pt;
+  }
+
+  .betball-item:hover {
+
+    color: @globalBlue;
+  }
 </style>
