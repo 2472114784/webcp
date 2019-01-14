@@ -214,6 +214,165 @@ class IMManager {
     RongIMClient.reconnect(callback, config);
 
   };
+
+  /**
+   * 加入聊天室
+   *
+   * @param chatRoomId 聊天室id
+   */
+  joinChatRoom(chatRoomId) {
+
+    var count = 10;// 拉取最近聊天最多 50 条。
+    RongIMClient.getInstance().joinChatRoom(chatRoomId, count, {
+      onSuccess: function () {
+        // 加入聊天室成功。
+      },
+      onError: function (error) {
+        // 加入聊天室失败
+      }
+    });
+  }
+
+  /**
+   * 退出聊天室
+   * @param chatRoomId 聊天室id
+   */
+  exitChatRoom(chatRoomId) {
+    RongIMClient.getInstance().quitChatRoom(chatRoomId, {
+      onSuccess: function () {
+        // 退出聊天室成功。
+      },
+      onError: function (error) {
+        // 退出聊天室失败。
+      }
+    });
+  }
+
+  /**
+   * 获取聊天室信息
+   */
+  getChatRoomInfo() {
+    var chatRoomId = "xxxx";// 聊天室 Id。
+    var count = 10; // 获取聊天室人数 （范围 0-20 ）
+    var order = RongIMLib.GetChatRoomType.REVERSE;// 排序方式。
+    RongIMClient.getInstance().getChatRoomInfo(chatRoomId, count, order, {
+      onSuccess: function (chatRoom) {
+        // chatRoom => 聊天室信息。
+        // chatRoom.userInfos => 返回聊天室成员。
+        // chatRoom.userTotalNums => 当前聊天室总人数。
+      },
+      onError: function (error) {
+        // 获取聊天室信息失败。
+      }
+    });
+  }
+
+
+  /**
+   * 发送文本消息
+   * @param targetId
+   * @param content
+   * @param extra
+   */
+  sendMessageFotText(targetId, content, extra) {
+    var msg = new RongIMLib.TextMessage({content: content, extra: extra});
+    var conversationtype = RongIMLib.ConversationType.CHATROOM;
+    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
+        onSuccess: function (message) {
+          //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
+          console.log("Send successfully");
+        },
+        onError: function (errorCode, message) {
+          var info = '';
+          switch (errorCode) {
+            case RongIMLib.ErrorCode.TIMEOUT:
+              info = '超时';
+              break;
+            case RongIMLib.ErrorCode.UNKNOWN_ERROR:
+              info = '未知错误';
+              break;
+            case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
+              info = '在黑名单中，无法向对方发送消息';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
+              info = '不在讨论组中';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_GROUP:
+              info = '不在群组中';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
+              info = '不在聊天室中';
+              break;
+            default :
+              info = x;
+              break;
+          }
+          console.log('发送失败:' + info);
+        }
+      }
+    );
+  }
+
+  /**
+   * 发送图片 （TODO 未封装）
+   */
+  sendMessageForImage() {
+    /*
+   图片转为可以使用 HTML5 的 FileReader 或者 canvas 也可以上传到后台进行转换。
+
+   注意事项：
+       1、缩略图必须是 base64 码的 jpg 图。
+       2、不带前缀。
+       3、大小建议不超过 100 K。
+ */
+    var base64Str = "base64 格式缩略图";
+    var imageUri = "图片 URL"; // 上传到自己服务器的 URL。
+    var msg = new RongIMLib.ImageMessage({content: base64Str, imageUri: imageUri});
+    var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
+    var targetId = "xxx"; // 目标 Id
+    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
+        onSuccess: function (message) {
+          //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
+          console.log("Send successfully");
+        },
+        onError: function (errorCode, message) {
+          var info = '';
+          switch (errorCode) {
+            case RongIMLib.ErrorCode.TIMEOUT:
+              info = '超时';
+              break;
+            case RongIMLib.ErrorCode.UNKNOWN_ERROR:
+              info = '未知错误';
+              break;
+            case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
+              info = '在黑名单中，无法向对方发送消息';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
+              info = '不在讨论组中';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_GROUP:
+              info = '不在群组中';
+              break;
+            case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
+              info = '不在聊天室中';
+              break;
+            default :
+              info = x;
+              break;
+          }
+          console.log('发送失败:' + info);
+        }
+      }
+    );
+  }
+
+  /**
+   * 发送红包
+   */
+  sendMessageForRedPacket() {
+
+  }
+
 }
 
 
