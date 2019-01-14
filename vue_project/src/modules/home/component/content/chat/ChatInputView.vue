@@ -1,4 +1,5 @@
 <script>
+  import {chatRoomModule} from "../../../../../common/im/IMModule";
 
   export default {
 
@@ -10,7 +11,7 @@
     methods: {
       onKeyup(e) {
         if (e.ctrlKey && e.keyCode === 13 && this.content.length) {
-          // this.sendMessage(this.content);
+          chatRoomModule.sendMessageFotText(this.content);
           this.content = '';
         }
       }

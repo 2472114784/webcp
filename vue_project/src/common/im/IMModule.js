@@ -14,14 +14,14 @@ class IMManager {
    * @param callbacks
    * @param modules
    */
-  init(callbacks) {
-
+  init() {
+    console.log("初始化融云", appKey);
     //初始化IM
     RongIMLib.RongIMClient.init(appKey);
     //语音播放初始化
     // RongIMLib.RongIMVoice.init();
 
-    var instance = RongIMClient.getInstance();
+    // var instance = RongIMClient.getInstance();
 
     // 设置连接监听状态 （ status 标识当前连接状态 ）
     // 连接状态监听器
@@ -30,7 +30,7 @@ class IMManager {
         switch (status) {
           case RongIMLib.ConnectionStatus.CONNECTED:
             console.log('链接成功');
-            callbacks.getInstance && callbacks.getInstance(instance);
+            // callbacks.getInstance && callbacks.getInstance(instance);
             break;
           case RongIMLib.ConnectionStatus.CONNECTING:
             console.log('正在链接');
@@ -110,9 +110,10 @@ class IMManager {
           default:
           // do something...
         }
-        callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
+        // callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
       }
     });
+    this.connect();
   }
 
   /**
@@ -156,9 +157,9 @@ class IMManager {
     RongIMClient.connect(token, {
       onSuccess: function (userId) {
         console.log("Connect successfully." + userId);
-        callbacks.getCurrentUser && callbacks.getCurrentUser({
-          userId: userId
-        });
+        // callbacks.getCurrentUser && callbacks.getCurrentUser({
+        //   userId: userId
+        // });
       },
       onTokenIncorrect: function () {
         console.log('token无效');
@@ -215,20 +216,28 @@ class IMManager {
 
   };
 
+
+}
+
+class ChatRoomModule {
   /**
    * 加入聊天室
    *
    * @param chatRoomId 聊天室id
    */
   joinChatRoom(chatRoomId) {
-
+    console.log("加入房间");
+    this.chatRoomId = chatRoomId;
     var count = 10;// 拉取最近聊天最多 50 条。
     RongIMClient.getInstance().joinChatRoom(chatRoomId, count, {
       onSuccess: function () {
         // 加入聊天室成功。
+        console.log("加入聊天室成功");
       },
       onError: function (error) {
         // 加入聊天室失败
+        console.log("加入聊天室失败");
+
       }
     });
   }
@@ -237,13 +246,21 @@ class IMManager {
    * 退出聊天室
    * @param chatRoomId 聊天室id
    */
-  exitChatRoom(chatRoomId) {
-    RongIMClient.getInstance().quitChatRoom(chatRoomId, {
+  exitChatRoom() {
+    if (!this.chatRoomId) {
+      return;
+    }
+    RongIMClient.getInstance().quitChatRoom(this.chatRoomId, {
       onSuccess: function () {
         // 退出聊天室成功。
+        this.chatRoomId = null;
+        console.log("退出聊天室成功");
+
       },
       onError: function (error) {
         // 退出聊天室失败。
+        console.log("退出聊天室失败");
+
       }
     });
   }
@@ -252,10 +269,12 @@ class IMManager {
    * 获取聊天室信息
    */
   getChatRoomInfo() {
-    var chatRoomId = "xxxx";// 聊天室 Id。
+    if (!this.chatRoomId) {
+      return
+    }
     var count = 10; // 获取聊天室人数 （范围 0-20 ）
     var order = RongIMLib.GetChatRoomType.REVERSE;// 排序方式。
-    RongIMClient.getInstance().getChatRoomInfo(chatRoomId, count, order, {
+    RongIMClient.getInstance().getChatRoomInfo(this.chatRoomId, count, order, {
       onSuccess: function (chatRoom) {
         // chatRoom => 聊天室信息。
         // chatRoom.userInfos => 返回聊天室成员。
@@ -274,13 +293,16 @@ class IMManager {
    * @param content
    * @param extra
    */
-  sendMessageFotText(targetId, content, extra) {
-    var msg = new RongIMLib.TextMessage({content: content, extra: extra});
+  sendMessageFotText(content) {
+    if (!this.chatRoomId) {
+      return;
+    }
+    var msg = new RongIMLib.TextMessage({content: content, extra: ""});
     var conversationtype = RongIMLib.ConversationType.CHATROOM;
-    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
+    RongIMClient.getInstance().sendMessage(conversationtype, this.chatRoomId, msg, {
         onSuccess: function (message) {
           //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-          console.log("Send successfully");
+          console.log("Send successfully", message);
         },
         onError: function (errorCode, message) {
           var info = '';
@@ -304,7 +326,7 @@ class IMManager {
               info = '不在聊天室中';
               break;
             default :
-              info = x;
+              info = message;
               break;
           }
           console.log('发送失败:' + info);
@@ -357,7 +379,7 @@ class IMManager {
               info = '不在聊天室中';
               break;
             default :
-              info = x;
+              info = message;
               break;
           }
           console.log('发送失败:' + info);
@@ -367,7 +389,7 @@ class IMManager {
   }
 
   /**
-   * 发送红包
+   *  TODO 发送红包
    */
   sendMessageForRedPacket() {
 
@@ -377,3 +399,5 @@ class IMManager {
 
 
 export default new IMManager();
+
+export const chatRoomModule = new ChatRoomModule();
