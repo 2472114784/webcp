@@ -20,7 +20,7 @@
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
   .chat-container {
     margin: 20px auto;
     width: 800px;

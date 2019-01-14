@@ -9,7 +9,7 @@
               img: "dist/images/1.jpg",
             },
             date: new Date(),
-            content: "测试内容",
+            content: "测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容",
             self: true,
           },
           {
@@ -20,6 +20,69 @@
             date: new Date(),
             content: "测试内容",
             self: false,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
+          },
+          {
+            user: {
+              name: "huahua",
+              img: "dist/images/1.jpg",
+            },
+            date: new Date(),
+            content: "测试内容",
+            self: true,
           },
           {
             user: {
@@ -69,7 +132,7 @@
         <p class="time">
           <span>{{ item.date | time }}</span>
         </p>
-        <div class="main" :class="[{ self: item.self },{'not-self':!item.self}]">
+        <div class="chat-main" :class="[{ self: item.self },{'not-self':!item.self}]">
           <img class="avatar" width="30" height="30" :src="item.user.img "/>
           <div class="text">{{ item.content }}</div>
         </div>
@@ -80,6 +143,7 @@
 
 <style lang="less" scoped>
   .message {
+    height: 500px;
     padding: 10px 15px;
     overflow-y: scroll;
 
