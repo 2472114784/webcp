@@ -116,9 +116,34 @@ class IMManager {
         console.log("onReceiveMessageListener", iMManager)
       }
     });
+    /**
+     * 注册自定义消息
+     */
+    this.registerCustomMessage();
+
     this.connect();
   }
 
+  /**
+   * 注册自定义消息
+   */
+  registerCustomMessage() {
+    this.registerRedPacketMessage();
+
+  }
+
+  /**
+   * 注册红包消息
+   */
+  registerRedPacketMessage() {
+    var messageName = "RedPacket"; // 消息名称。
+    var objectName = "s:RedPacket"; // 消息内置名称，请按照此格式命名。
+    var isCounted = true; // 消息计数
+    var isPersited = true; // 消息保存
+    var mesasgeTag = new RongIMLib.MessageTag(isCounted, isPersited);// 消息是否保存是否计数，true true 计数且保存，false false 不计数不保存
+    var prototypes = ["name", "age"]; // 消息类中的属性名。
+    RongIMClient.registerMessageType(messageName, objectName, mesasgeTag, prototypes);
+  }
   /**
    * 设置接收消息监听
    * @param onReceiveMessageListener
