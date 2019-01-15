@@ -1,6 +1,7 @@
 <script>
-  import IMModule from "../../../../../common/im/IMModule";
+  import IMModule, {emojiModule} from "../../../../../common/im/IMModule";
   import UserManager from '../../../../../common/dataManager/module/UserManager'
+
 
   export default {
     data() {
@@ -45,7 +46,7 @@
                 img: "dist/images/1.jpg",
               };
               messageModule.date = new Date();
-              messageModule.content = message.content.content;
+              messageModule.content = emojiModule.transformationForTextToEmojiByRongEmoji(message.content.content);
               messageModule.self = message.senderUserId == UserManager.getUser().id;
               console.log('sendid', message.senderUserId, typeof message.senderUserId);
               console.log('userid', UserManager.getUser().id, typeof UserManager.getUser().id);

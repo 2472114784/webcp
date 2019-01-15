@@ -15,7 +15,7 @@
 <script>
   import ChatMessageView from './ChatMessageView'
   import ChatInputView from './ChatInputView'
-  import IMModule, {chatRoomModule} from "../../../../../common/im/IMModule";
+  import IMModule, {chatRoomModule, emojiModule} from "../../../../../common/im/IMModule";
 
 
   export default {
@@ -32,7 +32,7 @@
     methods: {
       initChat: function () {
         IMModule.init();
-
+        emojiModule.init();
       },
       joinRoom: function () {
         chatRoomModule.joinChatRoom('room01');

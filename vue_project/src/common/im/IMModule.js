@@ -144,6 +144,7 @@ class IMManager {
     var prototypes = ["name", "age"]; // 消息类中的属性名。
     RongIMClient.registerMessageType(messageName, objectName, mesasgeTag, prototypes);
   }
+
   /**
    * 设置接收消息监听
    * @param onReceiveMessageListener
@@ -295,6 +296,7 @@ class ChatRoomModule {
       }
     }
   }
+
   /**
    * 是否已加入此房间
    * @returns {*}
@@ -418,7 +420,95 @@ class ChatRoomModule {
 
 }
 
+class EmojiModule {
+  constructor() {
+    // this.init();
+  }
+
+  init() {
+    // RongIMLib.RongIMEmoji.init();
+    // 表情信息可参考 http://unicode.org/emoji/charts/full-emoji-list.html
+    var config = {
+      size: 24, // 大小, 默认 24, 建议18 - 58
+      url: "//f2e.cn.ronghub.com/sdk/emoji-48.png", // Emoji 背景图片
+      lang: "zh", // Emoji 对应名称语言, 默认 zh
+      // 扩展表情
+      extension: {
+        dataSource: {
+          u1F914: {
+            en: "thinking face", // 英文名称
+            zh: "思考", // 中文名称
+            tag: "🤔", // 原生 Emoji
+            position: "0 0" // 所在背景图位置坐标
+          }
+        },
+        // 新增 Emoji 背景图 url
+        url: "//cdn.ronghub.com/thinking-face.png"
+      }
+    };
+    RongIMLib.RongIMEmoji.init(config);
+  }
+
+  /**
+   * Emoji 转名称
+   *  "😀😁测试 Emoji"=> "[笑嘻嘻][露齿而笑]测试 Emoji"
+   * @param message
+   */
+  transformationForEmojiToText(emojiMessage) {
+    return RongIMLib.RongIMEmoji.emojiToSymbol(emojiMessage);
+  }
+
+  /**
+   * 名称转 Emoji
+   * "[笑嘻嘻][露齿而笑]测试 Emoji"=> "😀😁测试 Emoji"
+   * @param textMessage
+   * @returns {*}
+   */
+  transformationForTextToEmoji(textMessage) {
+    return RongIMLib.RongIMEmoji.symbolToEmoji(textMessage);
+  }
+
+  /**
+   * Emoji 转 HTML
+   *
+   *  "\uf600测试 Emoji"  => "<span class='rong-emoji-content' name='[笑嘻嘻]'>😀</span>测试 Emoji"
+   */
+  transformationForEmojiToHtml(emojiMessage) {
+    return RongIMLib.RongIMEmoji.emojiToHTML(emojiMessage);
+  }
+
+  /**
+   * 名称转 HTML
+   * "[露齿而笑]测试 Emoji" // => "<span class='rong-emoji-content' name='[露齿而笑]'>😁</span>测试 Emoji"
+   */
+  transformationForTextToHtml(textMessage) {
+    return RongIMLib.RongIMEmoji.symbolToHTML(textMessage);
+  }
+
+  /**
+   * 支持 ADM、CMD
+   *
+   * "\uf600测试 Emoji" => "😀测试 Emoji"
+   * @param textMessage
+   */
+  transformationForTextToEmojiByRongEmoji(textMessage) {
+    // return RongIMEmoji.symbolToEmoji(textMessage);
+
+    // requirejs
+    require.config({
+      paths: {
+        'RongIMEmoji': '//cdn.ronghub.com/RongEmoji-2.2.7.min'
+      }
+    });
+    require(['RongIMEmoji'], function (RongIMEmoji) {
+      return RongIMEmoji.symbolToEmoji(textMessage);
+    });
+  }
+}
+
+export const emojiModule = new EmojiModule();
+export const chatRoomModule = new ChatRoomModule();
+
 const iMManager = new IMManager();
 export default iMManager;
 
-export const chatRoomModule = new ChatRoomModule();
