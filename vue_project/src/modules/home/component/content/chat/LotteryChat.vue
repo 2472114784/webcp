@@ -5,7 +5,7 @@
 
     <div class="chat-container">
       <div class="chat-main">
-        <v-chat-message></v-chat-message>
+        <v-chat-message :imModule="imModule"></v-chat-message>
         <v-chat-input></v-chat-input>
       </div>
     </div>
@@ -20,6 +20,11 @@
 
   export default {
     name: "LotteryChat",
+    data() {
+      return {
+        imModule: IMModule,
+      }
+    },
     components: {
       'v-chat-message': ChatMessageView,
       'v-chat-input': ChatInputView,
@@ -27,9 +32,10 @@
     methods: {
       initChat: function () {
         IMModule.init();
+
       },
       joinRoom: function () {
-        chatRoomModule.joinChatRoom(111);
+        chatRoomModule.joinChatRoom('room01');
       },
       sendMsg: function () {
         chatRoomModule.sendMessageFotText("hello");
@@ -37,6 +43,7 @@
     },
     mounted() {
       this.initChat();
+
     }
   }
 </script>

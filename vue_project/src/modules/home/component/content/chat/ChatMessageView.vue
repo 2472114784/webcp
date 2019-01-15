@@ -1,109 +1,15 @@
 <script>
+  import IMModule from "../../../../../common/im/IMModule";
+
+
   export default {
     data() {
       return {
-        messages: [
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/2.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: false,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-          {
-            user: {
-              name: "huahua",
-              img: "dist/images/1.jpg",
-            },
-            date: new Date(),
-            content: "测试内容",
-            self: true,
-          },
-        ],
+        messages: [],
       }
+    },
+    props: {
+      imModule: {}
     },
     filters: {
       // 将日期过滤为 hour:minutes
@@ -121,6 +27,43 @@
           this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
         });
       }
+    },
+    methods: {
+      setOnReceiveMessageListener: function () {
+        console.log("listener:");
+
+        IMModule.setOnReceiveMessageListener(message => {
+          console.log("listener receive:" + message);
+
+          switch (message.messageType) {
+            case RongIMClient.MessageType.TextMessage:
+              // message.content.content => 消息内容
+              let messageModule = {};
+              messageModule.user = {
+                name: "huahua",
+                img: "dist/images/1.jpg",
+              };
+              messageModule.date = new Date();
+              messageModule.content = message.content.content;
+              messageModule.self = false;
+              this.messages.push(messageModule);
+              break;
+            case RongIMClient.MessageType.VoiceMessage:
+              // 对声音进行预加载
+              // message.content.content 格式为 AMR 格式的 base64 码
+              break;
+            case RongIMClient.MessageType.ImageMessage:
+              // message.content.content => 图片缩略图 base64。
+              // message.content.imageUri => 原图 URL。
+              break;
+          }
+        });
+      }
+    },
+    mounted() {
+      this.setOnReceiveMessageListener();
+      console.log("比较import", this.imModule === IMModule)
+
     }
   };
 </script>

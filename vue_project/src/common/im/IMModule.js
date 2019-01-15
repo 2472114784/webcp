@@ -4,6 +4,7 @@ import UserManager from '../dataManager/module/UserManager'
 const appKey = 'z3v5yqkbz1jv0';
 
 class IMManager {
+
   initVue(vue) {
     this.$vue = vue;
   }
@@ -15,7 +16,7 @@ class IMManager {
    * @param modules
    */
   init() {
-    console.log("初始化融云", appKey);
+    console.log("初始化融云", this);
     //初始化IM
     RongIMLib.RongIMClient.init(appKey);
     //语音播放初始化
@@ -67,6 +68,7 @@ class IMManager {
         switch (message.messageType) {
           case RongIMClient.MessageType.TextMessage:
             // message.content.content => 消息内容
+            console.log("receive:" + message.content.content);
             break;
           case RongIMClient.MessageType.VoiceMessage:
             // 对声音进行预加载
@@ -110,10 +112,21 @@ class IMManager {
           default:
           // do something...
         }
-        // callbacks.receiveNewMessage && callbacks.receiveNewMessage(message);
+        iMManager.onReceiveMessageListener && iMManager.onReceiveMessageListener(message);
+        console.log("onReceiveMessageListener", iMManager)
       }
     });
     this.connect();
+  }
+
+  /**
+   * 设置接收消息监听
+   * @param onReceiveMessageListener
+   */
+  setOnReceiveMessageListener(onReceiveMessageListener) {
+    console.log("设置监听", this);
+    // 消息监听器
+    this.onReceiveMessageListener = onReceiveMessageListener;
   }
 
   /**
@@ -221,11 +234,22 @@ class IMManager {
 
 class ChatRoomModule {
   /**
+   * 是否已加入此房间
+   * @returns {*}
+   */
+  hasChatRoom(chatRoomId) {
+    return this.chatRoomId === chatRoomId;
+  }
+
+  /**
    * 加入聊天室
    *
    * @param chatRoomId 聊天室id
    */
   joinChatRoom(chatRoomId) {
+    if (!chatRoomId) {
+      return;
+    }
     console.log("加入房间");
     this.chatRoomId = chatRoomId;
     var count = 10;// 拉取最近聊天最多 50 条。
@@ -397,7 +421,7 @@ class ChatRoomModule {
 
 }
 
-
-export default new IMManager();
+const iMManager = new IMManager();
+export default iMManager;
 
 export const chatRoomModule = new ChatRoomModule();
