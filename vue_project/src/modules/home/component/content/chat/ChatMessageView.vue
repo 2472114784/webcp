@@ -1,6 +1,6 @@
 <script>
   import IMModule from "../../../../../common/im/IMModule";
-
+  import UserManager from '../../../../../common/dataManager/module/UserManager'
 
   export default {
     data() {
@@ -23,9 +23,10 @@
     directives: {
       // 发送消息后滚动到底部
       'scroll-bottom'() {
-        this.vm.$nextTick(() => {
-          this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
-        });
+        console.log('scroll-bottom', this);
+        // this.$nextTick(() => {
+        //   this.el.scrollTop = this.el.scrollHeight - this.el.clientHeight;
+        // });
       }
     },
     methods: {
@@ -33,7 +34,7 @@
         console.log("listener:");
 
         IMModule.setOnReceiveMessageListener(message => {
-          console.log("listener receive:" + message);
+          console.log("listener receive:", message);
 
           switch (message.messageType) {
             case RongIMClient.MessageType.TextMessage:
@@ -45,8 +46,15 @@
               };
               messageModule.date = new Date();
               messageModule.content = message.content.content;
-              messageModule.self = false;
+              messageModule.self = message.senderUserId == UserManager.getUser().id;
+              console.log('sendid', message.senderUserId, typeof message.senderUserId);
+              console.log('userid', UserManager.getUser().id, typeof UserManager.getUser().id);
+              console.log('is===', message.senderUserId === UserManager.getUser().id);
               this.messages.push(messageModule);
+              this.$nextTick(() => {
+                console.log("el", this);
+                this.$el.scrollTop = this.$el.scrollHeight - 500;
+              });
               break;
             case RongIMClient.MessageType.VoiceMessage:
               // 对声音进行预加载
@@ -69,7 +77,7 @@
 </script>
 
 <template>
-  <div class="message">
+  <div class="message" v-scroll-bottom="messages">
     <ul v-if="messages">
       <li v-for="item in messages">
         <p class="time">

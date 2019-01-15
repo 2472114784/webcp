@@ -233,6 +233,43 @@ class IMManager {
 }
 
 class ChatRoomModule {
+
+  constructor() {
+    this.sendMessageCallback = {
+      onSuccess: function (message) {
+        //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
+        console.log("Send successfully");
+        iMManager.onReceiveMessageListener && iMManager.onReceiveMessageListener(message);
+      },
+      onError: function (errorCode, message) {
+        var info = '';
+        switch (errorCode) {
+          case RongIMLib.ErrorCode.TIMEOUT:
+            info = '超时';
+            break;
+          case RongIMLib.ErrorCode.UNKNOWN_ERROR:
+            info = '未知错误';
+            break;
+          case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
+            info = '在黑名单中，无法向对方发送消息';
+            break;
+          case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
+            info = '不在讨论组中';
+            break;
+          case RongIMLib.ErrorCode.NOT_IN_GROUP:
+            info = '不在群组中';
+            break;
+          case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
+            info = '不在聊天室中';
+            break;
+          default :
+            info = message;
+            break;
+        }
+        console.log('发送失败:' + info);
+      }
+    }
+  }
   /**
    * 是否已加入此房间
    * @returns {*}
@@ -323,40 +360,7 @@ class ChatRoomModule {
     }
     var msg = new RongIMLib.TextMessage({content: content, extra: ""});
     var conversationtype = RongIMLib.ConversationType.CHATROOM;
-    RongIMClient.getInstance().sendMessage(conversationtype, this.chatRoomId, msg, {
-        onSuccess: function (message) {
-          //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-          console.log("Send successfully", message);
-        },
-        onError: function (errorCode, message) {
-          var info = '';
-          switch (errorCode) {
-            case RongIMLib.ErrorCode.TIMEOUT:
-              info = '超时';
-              break;
-            case RongIMLib.ErrorCode.UNKNOWN_ERROR:
-              info = '未知错误';
-              break;
-            case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
-              info = '在黑名单中，无法向对方发送消息';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
-              info = '不在讨论组中';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_GROUP:
-              info = '不在群组中';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
-              info = '不在聊天室中';
-              break;
-            default :
-              info = message;
-              break;
-          }
-          console.log('发送失败:' + info);
-        }
-      }
-    );
+    RongIMClient.getInstance().sendMessage(conversationtype, this.chatRoomId, msg, this.sendMessageCallback);
   }
 
   /**
@@ -376,40 +380,7 @@ class ChatRoomModule {
     var msg = new RongIMLib.ImageMessage({content: base64Str, imageUri: imageUri});
     var conversationtype = RongIMLib.ConversationType.PRIVATE; // 单聊,其他会话选择相应的消息类型即可。
     var targetId = "xxx"; // 目标 Id
-    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, {
-        onSuccess: function (message) {
-          //message 为发送的消息对象并且包含服务器返回的消息唯一Id和发送消息时间戳
-          console.log("Send successfully");
-        },
-        onError: function (errorCode, message) {
-          var info = '';
-          switch (errorCode) {
-            case RongIMLib.ErrorCode.TIMEOUT:
-              info = '超时';
-              break;
-            case RongIMLib.ErrorCode.UNKNOWN_ERROR:
-              info = '未知错误';
-              break;
-            case RongIMLib.ErrorCode.REJECTED_BY_BLACKLIST:
-              info = '在黑名单中，无法向对方发送消息';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_DISCUSSION:
-              info = '不在讨论组中';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_GROUP:
-              info = '不在群组中';
-              break;
-            case RongIMLib.ErrorCode.NOT_IN_CHATROOM:
-              info = '不在聊天室中';
-              break;
-            default :
-              info = message;
-              break;
-          }
-          console.log('发送失败:' + info);
-        }
-      }
-    );
+    RongIMClient.getInstance().sendMessage(conversationtype, targetId, msg, this.sendMessageCallback);
   }
 
   /**
@@ -418,6 +389,7 @@ class ChatRoomModule {
   sendMessageForRedPacket() {
 
   }
+
 
 }
 
