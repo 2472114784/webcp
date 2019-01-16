@@ -426,27 +426,27 @@ class EmojiModule {
   }
 
   init() {
-    // RongIMLib.RongIMEmoji.init();
-    // 表情信息可参考 http://unicode.org/emoji/charts/full-emoji-list.html
-    var config = {
-      size: 24, // 大小, 默认 24, 建议18 - 58
-      url: "//f2e.cn.ronghub.com/sdk/emoji-48.png", // Emoji 背景图片
-      lang: "zh", // Emoji 对应名称语言, 默认 zh
-      // 扩展表情
-      extension: {
-        dataSource: {
-          u1F914: {
-            en: "thinking face", // 英文名称
-            zh: "思考", // 中文名称
-            tag: "🤔", // 原生 Emoji
-            position: "0 0" // 所在背景图位置坐标
-          }
-        },
-        // 新增 Emoji 背景图 url
-        url: "//cdn.ronghub.com/thinking-face.png"
-      }
-    };
-    RongIMLib.RongIMEmoji.init(config);
+    RongIMLib.RongIMEmoji.init();
+    // // 表情信息可参考 http://unicode.org/emoji/charts/full-emoji-list.html
+    // var config = {
+    //   size: 24, // 大小, 默认 24, 建议18 - 58
+    //   url: "//f2e.cn.ronghub.com/sdk/emoji-48.png", // Emoji 背景图片
+    //   lang: "zh", // Emoji 对应名称语言, 默认 zh
+    //   // 扩展表情
+    //   extension: {
+    //     dataSource: {
+    //       u1F914: {
+    //         en: "thinking face", // 英文名称
+    //         zh: "思考", // 中文名称
+    //         tag: "🤔", // 原生 Emoji
+    //         position: "0 0" // 所在背景图位置坐标
+    //       }
+    //     },
+    //     // 新增 Emoji 背景图 url
+    //     url: "//cdn.ronghub.com/thinking-face.png"
+    //   }
+    // };
+    // RongIMLib.RongIMEmoji.init(config);
   }
 
   /**
@@ -465,6 +465,7 @@ class EmojiModule {
    * @returns {*}
    */
   transformationForTextToEmoji(textMessage) {
+    console.log("Emoji", RongIMLib.RongIMEmoji);
     return RongIMLib.RongIMEmoji.symbolToEmoji(textMessage);
   }
 
@@ -495,20 +496,21 @@ class EmojiModule {
     // return RongIMEmoji.symbolToEmoji(textMessage);
 
     // requirejs
-    require.config({
-      paths: {
-        'RongIMEmoji': '//cdn.ronghub.com/RongEmoji-2.2.7.min'
-      }
-    });
-    require(['RongIMEmoji'], function (RongIMEmoji) {
-      return RongIMEmoji.symbolToEmoji(textMessage);
-    });
+    // require.config({
+    //   paths: {
+    //     'RongIMEmoji': '//cdn.ronghub.com/RongEmoji-2.2.7.min'
+    //   }
+    // });
+    // require(['RongIMEmoji'], function (RongIMEmoji) {
+    //   return RongIMEmoji.symbolToEmoji(textMessage);
+    // });
   }
 }
 
-export const emojiModule = new EmojiModule();
-export const chatRoomModule = new ChatRoomModule();
-
 const iMManager = new IMManager();
 export default iMManager;
+export const chatRoomModule = new ChatRoomModule();
+export const emojiModule = new EmojiModule();
+
+
 

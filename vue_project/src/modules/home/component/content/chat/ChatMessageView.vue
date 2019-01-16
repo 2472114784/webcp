@@ -46,7 +46,7 @@
                 img: "dist/images/1.jpg",
               };
               messageModule.date = new Date();
-              messageModule.content = emojiModule.transformationForTextToEmojiByRongEmoji(message.content.content);
+              messageModule.content = emojiModule.transformationForTextToEmoji(message.content.content);
               messageModule.self = message.senderUserId == UserManager.getUser().id;
               console.log('sendid', message.senderUserId, typeof message.senderUserId);
               console.log('userid', UserManager.getUser().id, typeof UserManager.getUser().id);
