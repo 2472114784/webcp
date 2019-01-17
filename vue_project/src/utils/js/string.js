@@ -92,3 +92,5 @@ class StringFn {
     return str;
   }
 }
+
+export default new StringFn();

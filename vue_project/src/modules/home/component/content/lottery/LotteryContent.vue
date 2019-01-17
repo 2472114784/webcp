@@ -1,6 +1,7 @@
 <template>
   <div id="lottery-content" class="global-box-column-flex-start global-layout-width">
-    <v-login/>
+    <!--<v-login/>-->
+    <v-register/>
     <!--<div class="global-flex-row-content-start">
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
     </div>-->
@@ -39,6 +40,7 @@
   import NumView from './NumView'
   import LotteryClassItemView from '../../../../lottery/lotteryClassView/LotteryClassItemView'
   import IMModule from '../../../../../common/im/IMModule'
+  import RegisterView from '../../../../login/register/RegisterView'
 
   export default {
     data() {
@@ -60,6 +62,7 @@
       'v-unit': UnitView,
       'v-num': NumView,
       'v-lottery-class-item': LotteryClassItemView,
+      'v-register': RegisterView,
     },
     computed: {
       getOrderNum: function () {
