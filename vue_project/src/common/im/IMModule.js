@@ -487,6 +487,21 @@ class EmojiModule {
   }
 
   /**
+   * list => [
+   {
+             unicode: 'u1F600',
+             emoji: "😀",
+             node: span,
+             symbol: "[笑嘻嘻]"
+         },
+   ...
+   ]
+   * @returns {Array|HTMLElement}
+   */
+  getEmojiList() {
+    return RongIMLib.RongIMEmoji.list;
+  }
+  /**
    * 支持 ADM、CMD
    *
    * "\uf600测试 Emoji" => "😀测试 Emoji"
