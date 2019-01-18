@@ -3,7 +3,7 @@
     <p @click="joinRoom">加入房间</p>
     <p @click="sendMsg">发送消息</p>
 
-    <div class="chat-container">
+    <div class=" chat-container">
       <div class="chat-main">
         <v-chat-message :imModule="imModule"></v-chat-message>
         <v-chat-input></v-chat-input>
@@ -54,7 +54,6 @@
     width: 800px;
     height: 600px;
 
-    overflow: hidden;
     border-radius: 3px;
   }
 

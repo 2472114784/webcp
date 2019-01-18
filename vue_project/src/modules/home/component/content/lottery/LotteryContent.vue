@@ -1,7 +1,7 @@
 <template>
   <div id="lottery-content" class="global-box-column-flex-start global-layout-width">
-    <!--<v-login/>-->
-    <v-register/>
+    <v-login/>
+    <!--<v-register/>-->
     <!--<div class="global-flex-row-content-start">
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
     </div>-->
