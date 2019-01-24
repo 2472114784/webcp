@@ -109,6 +109,8 @@ class IMManager {
           case RongIMClient.MessageType.UnknownMessage:
             // do something...
             break;
+          case RongIMClient.MessageType.RedPacketMessage://自定义红包消息
+            break;
           default:
           // do something...
         }
@@ -117,13 +119,27 @@ class IMManager {
       }
     });
     /**
+     * 设置过滤消息
+     */
+    this.setFilterMessages();
+    /**
      * 注册自定义消息
      */
     this.registerCustomMessage();
-
+    /**
+     * 链接
+     */
     this.connect();
   }
 
+  /**
+   * 设置过滤消息 TODO 为设置过滤内容
+   */
+  setFilterMessages() {
+    var messageNames = ['CommandMessage']; // 可以设置多个。
+    RongIMClient.getInstance().setFilterMessages(messageNames);
+
+  }
   /**
    * 注册自定义消息
    */
@@ -134,14 +150,21 @@ class IMManager {
 
   /**
    * 注册红包消息
+   *  private long id;
+   private long userId;
+   private String remark;
+   private double money;
+   private int num;
+   private int type;
+   private String createTime;
    */
   registerRedPacketMessage() {
-    var messageName = "RedPacket"; // 消息名称。
-    var objectName = "s:RedPacket"; // 消息内置名称，请按照此格式命名。
+    var messageName = "RedPacketMessage"; // 消息名称。
+    var objectName = "RC:Chatroom"; // 消息内置名称，请按照此格式命名。
     var isCounted = true; // 消息计数
     var isPersited = true; // 消息保存
     var mesasgeTag = new RongIMLib.MessageTag(isCounted, isPersited);// 消息是否保存是否计数，true true 计数且保存，false false 不计数不保存
-    var prototypes = ["name", "age"]; // 消息类中的属性名。
+    var prototypes = ["id", "userId", "remark", "money", "num", "type", "createTime"]; // 消息类中的属性名。
     RongIMClient.registerMessageType(messageName, objectName, mesasgeTag, prototypes);
   }
 
@@ -411,10 +434,26 @@ class ChatRoomModule {
   }
 
   /**
-   *  TODO 发送红包
+   *  发送红包
    */
-  sendMessageForRedPacket() {
-
+  sendMessageForRedPacket(redPacketId, sendUserId, redPacketRemark, redPacketMoney, redPacketNum, redPacketType, redPacketCreateTime) {
+    var conversationType = RongIMLib.ConversationType.CHATROOM; //单聊,其他会话选择相应的消息类型即可。
+    var targetId = this.chatRoomId; // 想获取自己和谁的历史消息，targetId 赋值为对方的 Id。
+    var msg = new RongIMClient.RegisterMessage.RedPacketMessage({
+      id: redPacketId,
+      userId: sendUserId,
+      remark: redPacketRemark,
+      money: redPacketMoney,
+      num: redPacketNum,
+      type: redPacketType,
+      createTime: redPacketCreateTime
+    });
+    RongIMClient.getInstance().sendMessage(conversationType, targetId, msg, {
+      onSuccess: function (message) {
+      },
+      onError: function (errorCode) {
+      }
+    });
   }
 
 

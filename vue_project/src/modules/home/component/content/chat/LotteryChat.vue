@@ -2,11 +2,12 @@
   <div>
     <p @click="joinRoom">加入房间</p>
     <p @click="sendMsg">发送消息</p>
-
     <div class=" chat-container">
-      <div class="chat-main">
-        <v-chat-message :imModule="imModule"></v-chat-message>
-        <v-chat-input></v-chat-input>
+      <div class="chat-message-container">
+        <v-chat-message :imModule="imModule"/>
+      </div>
+      <div class="chat-input-container">
+        <v-chat-input/>
       </div>
     </div>
   </div>
@@ -16,7 +17,6 @@
   import ChatMessageView from './ChatMessageView'
   import ChatInputView from './ChatInputView'
   import IMModule, {chatRoomModule, emojiModule} from "../../../../../common/im/IMModule";
-
 
   export default {
     name: "LotteryChat",
@@ -39,7 +39,8 @@
       },
       sendMsg: function () {
         chatRoomModule.sendMessageFotText("hello");
-      }
+      },
+
     },
     mounted() {
       this.initChat();
@@ -50,16 +51,24 @@
 
 <style lang="less" scoped>
   .chat-container {
-    margin: 20px auto;
-    width: 800px;
-    height: 600px;
-
-    border-radius: 3px;
+    width: 300px;
+    height: 400px;
+    position: absolute;
   }
 
-  .chat-main {
-    position: relative;
+  .chat-message-container {
+    left: 0;
+    top: 0;
+    height: 70%;
     overflow: hidden;
-    background-color: #eee;
+
   }
+
+  .chat-input-container {
+    left: 0;
+    top: 70%;
+    height: 30%;
+  }
+
+
 </style>

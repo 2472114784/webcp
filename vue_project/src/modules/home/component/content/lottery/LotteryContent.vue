@@ -5,25 +5,25 @@
     <!--<div class="global-flex-row-content-start">
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
     </div>-->
-    <v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"
-                    :changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>
-    <div class="global-flex-row-content-start">
-      <div class="global-flex-column-content-start ball-container">
-        <div id="balls">
-          <v-betballs v-for="(item,index) in this.lotteryChildEntity.orderList" :lotteryBalls="item" :key="index"/>
-        </div>
-        <div class="global-flex-row-content-start-items-center">
-          <v-unit :unitChangeSelectedCallback="unitChangeSelectedCallback"/>
-          <v-num :numChangeCallback="numChangeCallback"/>
-          <p>订单注数总共:{{getOrderNum}} </p>
-          <p>总金额:{{getTotalMoney}}</p>
-          <el-button type="primary" @click="commitOrder">快速投注</el-button>
-          <el-button type="primary" @click="addOrder">添加号码</el-button>
-        </div>
-      </div>
-      <v-lottery-result/>
-    </div>
-    <v-lottery-order/>
+    <!--<v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"-->
+    <!--:changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>-->
+    <!--<div class="global-flex-row-content-start">-->
+    <!--<div class="global-flex-column-content-start ball-container">-->
+    <!--<div id="balls">-->
+    <!--<v-betballs v-for="(item,index) in this.lotteryChildEntity.orderList" :lotteryBalls="item" :key="index"/>-->
+    <!--</div>-->
+    <!--<div class="global-flex-row-content-start-items-center">-->
+    <!--<v-unit :unitChangeSelectedCallback="unitChangeSelectedCallback"/>-->
+    <!--<v-num :numChangeCallback="numChangeCallback"/>-->
+    <!--<p>订单注数总共:{{getOrderNum}} </p>-->
+    <!--<p>总金额:{{getTotalMoney}}</p>-->
+    <!--<el-button type="primary" @click="commitOrder">快速投注</el-button>-->
+    <!--<el-button type="primary" @click="addOrder">添加号码</el-button>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<v-lottery-result/>-->
+    <!--</div>-->
+    <!--<v-lottery-order/>-->
 
   </div>
 </template>

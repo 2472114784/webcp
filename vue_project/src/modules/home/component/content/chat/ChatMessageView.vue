@@ -1,7 +1,7 @@
 <script>
   import IMModule, {emojiModule} from "../../../../../common/im/IMModule";
   import UserManager from '../../../../../common/dataManager/module/UserManager'
-
+  import {EVENT_ADD_EMOJI} from "../../../../../common/eventbus/EventBus";
 
   export default {
     data() {
@@ -30,7 +30,11 @@
         // });
       }
     },
+
     methods: {
+      /**
+       * 接受消息监听
+       */
       setOnReceiveMessageListener: function () {
         console.log("listener:");
 
@@ -48,12 +52,8 @@
               messageModule.date = new Date();
               messageModule.content = emojiModule.transformationForTextToEmoji(message.content.content);
               messageModule.self = message.senderUserId == UserManager.getUser().id;
-              console.log('sendid', message.senderUserId, typeof message.senderUserId);
-              console.log('userid', UserManager.getUser().id, typeof UserManager.getUser().id);
-              console.log('is===', message.senderUserId === UserManager.getUser().id);
               this.messages.push(messageModule);
               this.$nextTick(() => {
-                console.log("el", this);
                 this.$el.scrollTop = this.$el.scrollHeight - 500;
               });
               break;
@@ -67,7 +67,7 @@
               break;
           }
         });
-      }
+      },
     },
     mounted() {
       this.setOnReceiveMessageListener();
@@ -78,6 +78,8 @@
 </script>
 
 <template>
+
+  <!--聊天列表-->
   <div class="message-container global-flex-column-content-center" v-scroll-bottom="messages">
     <div v-for="item in messages" class="message-item">
       <p><span class="time-text">{{ item.date | time }}</span>
@@ -92,13 +94,17 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <style lang="less" scoped>
+
+
   .message-container {
     height: 500px;
     padding: 10px 15px;
     overflow-y: scroll;
+    background-color: #13CE66;
   }
 
   .message-item {

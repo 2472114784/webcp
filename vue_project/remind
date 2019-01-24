@@ -3,7 +3,10 @@
 
     1.采用漂浮窗口又下角聊天
     2.使用table实现彩票title列表  https://blog.csdn.net/yanzisu_congcong/article/details/82220186
-     
+
 
 已完成：
 登录，注册等使用element form
+
+完成部分：
+自定义红包消息
