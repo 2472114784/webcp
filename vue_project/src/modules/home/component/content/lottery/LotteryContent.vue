@@ -5,25 +5,25 @@
     <!--<div class="global-flex-row-content-start">
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
     </div>-->
-    <!--<v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"-->
-    <!--:changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>-->
-    <!--<div class="global-flex-row-content-start">-->
-    <!--<div class="global-flex-column-content-start ball-container">-->
-    <!--<div id="balls">-->
-    <!--<v-betballs v-for="(item,index) in this.lotteryChildEntity.orderList" :lotteryBalls="item" :key="index"/>-->
-    <!--</div>-->
-    <!--<div class="global-flex-row-content-start-items-center">-->
-    <!--<v-unit :unitChangeSelectedCallback="unitChangeSelectedCallback"/>-->
-    <!--<v-num :numChangeCallback="numChangeCallback"/>-->
-    <!--<p>订单注数总共:{{getOrderNum}} </p>-->
-    <!--<p>总金额:{{getTotalMoney}}</p>-->
-    <!--<el-button type="primary" @click="commitOrder">快速投注</el-button>-->
-    <!--<el-button type="primary" @click="addOrder">添加号码</el-button>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<v-lottery-result/>-->
-    <!--</div>-->
-    <!--<v-lottery-order/>-->
+    <v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"
+                    :changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>
+    <div class="global-flex-row-content-start">
+      <div class="global-flex-column-content-start ball-container">
+        <div id="balls">
+          <v-betballs v-for="(item,index) in this.lotteryChildEntity.orderList" :lotteryBalls="item" :key="index"/>
+        </div>
+        <div class="global-flex-row-content-start-items-center">
+          <v-unit :unitChangeSelectedCallback="unitChangeSelectedCallback"/>
+          <v-num :numChangeCallback="numChangeCallback"/>
+          <p>订单注数总共:{{getOrderNum}} </p>
+          <p>总金额:{{getTotalMoney}}</p>
+          <el-button type="primary" @click="commitOrder">快速投注</el-button>
+          <el-button type="primary" @click="addOrder">添加号码</el-button>
+        </div>
+      </div>
+      <v-lottery-result/>
+    </div>
+    <v-lottery-order/>
 
   </div>
 </template>
@@ -66,7 +66,7 @@
     },
     computed: {
       getOrderNum: function () {
-        return dataUtils.computeOrderNumForLotteryEntity(this.lotteryEntity)
+        return dataUtils.computeOrderNumForLotteryChildEntity(this.lotteryChildEntity)
       },
       getTotalMoney: function () {
         let scale = 1.0;
@@ -81,7 +81,7 @@
             scale = 0.01;
             break;
         }
-        return dataUtils.computeOrderNumForLotteryEntity(this.lotteryEntity) * scale * this.num;
+        return dataUtils.computeOrderNumForLotteryChildEntity(this.lotteryChildEntity) * scale * this.num;
         // switch () {
         //
         // }
@@ -89,10 +89,11 @@
     },
     methods: {
       http_lottery: function () {
-        this.$http(LotteryOrderApi.getLotteryById(30000)).then(data => {
+        this.$http(LotteryOrderApi.getLotteryById(300000000)).then(data => {
 
           this.lotteryEntity = data;
-          let lotteryChilds = this.lotteryEntity.lotteryChilds;
+          console.log("data", data);
+          let lotteryChilds = this.lotteryEntity.lotteryChildClassEntities[0].lotteryChildList;
           for (let i = 0; i < lotteryChilds.length; i++) {
             this.handlerLotteryChildEntity(lotteryChilds[i]);
             if (i === this.selectedIndex) {
@@ -123,7 +124,11 @@
        * 提交订单
        */
       commitOrder: function () {
-        this.$http(LotteryOrderApi.createLotteryOrder(lotteryEntity))
+        let commitOrderData = dataUtils.createCommitOrderData(this.num, this.lotteryChildEntity);
+        console.log("提交数据", [commitOrderData])
+        this.$http(LotteryOrderApi.createLotteryOrder([commitOrderData])).then(data => {
+          console.log("提交订单返回数据", data);
+        })
       },
       /**
        * 添加订单

@@ -11,9 +11,11 @@ axios.interceptors.request.use(
   config => {
     config.data = JSON.stringify(config.data);
     config.headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      // "Content-Type": "application/json",
+      // 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
       'token': '22E1CEDCD53248ABB79CB734C5EC9405',
+      'request_time': TimeManager.getServerTime(),
+      'contentType': "application/json; charset=utf-8",
+      'dataType': "json",
     }
     return config;
   },

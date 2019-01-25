@@ -53,11 +53,11 @@ export default {
    * @returns {{method: string, data: {request_time: *, orders: *}, url: string}}
    */
   createLotteryOrder: function (orders) {
+    console.log("time=>", TimeManager.getServerTime());
     return {
-      method: 'get',
+      method: 'post',
       url: '/createLotteryOrder',
       data: {
-        'request_time': TimeManager.getServerTime(),
         'orders': orders,
       }
     }
