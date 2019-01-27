@@ -93,6 +93,7 @@ class DataUtils {
    * @param lotteryChildEntity
    */
   createCommitOrderData(money, lotteryChildEntity) {
+    console.log("需处理的数据", lotteryChildEntity);
     let orderValue;
     let orderList = lotteryChildEntity.orderList;
     let tempLotteryValue = [];
@@ -102,11 +103,13 @@ class DataUtils {
       for (let j = 0; j < lotteryItemEntities.length; j++) {
         let lotteryItemEntity = lotteryItemEntities[j];
         if (lotteryItemEntity.selected) {
-          tempItemValues.push(lotteryChildEntity.lotteryItemId);
+          tempItemValues.push(lotteryItemEntity.lotteryItemId);
         }
       }
       if (tempItemValues && tempItemValues.length > 0) {
-        tempLotteryValue.push(tempItemValues.join(","));
+        let tempItemsResult = tempItemValues.join(",");
+        console.log(tempItemsResult)
+        tempLotteryValue.push(tempItemsResult);
       } else {
         tempLotteryValue.push("");
       }

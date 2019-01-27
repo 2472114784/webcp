@@ -54,12 +54,12 @@ export default {
    */
   createLotteryOrder: function (orders) {
     console.log("time=>", TimeManager.getServerTime());
+    console.log("data=>", JSON.stringify(orders));
     return {
       method: 'post',
       url: '/createLotteryOrder',
-      data: {
-        'orders': orders,
-      }
+      data: eval('(' + JSON.stringify(orders) + ')'),
+
     }
   },
   /**
