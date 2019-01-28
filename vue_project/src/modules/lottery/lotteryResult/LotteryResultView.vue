@@ -81,7 +81,7 @@
     },
     methods: {
       httpLotteryResult: function () {
-        this.$http(LotteryResultApi.getListLotteryResultByLotteryId(30000, 0)).then(data => {
+        this.$http(LotteryResultApi.getListLotteryResultByLotteryId(300000000, 0)).then(data => {
           console.log("请求开奖结果数据", data)
           this.lotteryResult = data;
         })

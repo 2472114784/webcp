@@ -2,7 +2,7 @@
   <div>
     <p
       :class="['global-flex-row-content-center-items-center','lotteryMenuItemView',{'lotteryMenuItemSelected':selectedIndex==lotteryMenuIndex}]"
-      @click="changeMenuItemIndex(lotteryMenuIndex)">{{lotteryChildEntity.lotteryChildName}}</p>
+      @click="changeMenuItemIndex(lotteryMenuIndex)">{{lotteryChildClassEntity.name}}</p>
   </div>
 </template>
 
@@ -11,18 +11,15 @@
     name: "LotteryMenuItemView",
 
     props: {
-      lotteryChildEntity: {},
+      lotteryChildClassEntity: null,
       selectedIndex: 0,
       lotteryMenuIndex: 0,
       changeMenuIndexCallback: Function,
     },
     methods: {
       changeMenuItemIndex: function (index) {
-        this.changeMenuIndexCallback(index)
+        this.changeMenuIndexCallback(index, this.lotteryChildClassEntity)
       }
-    },
-    mounted() {
-      console.log('lotteryChildEntity', this.lotteryChildEntity)
     }
   }
 </script>

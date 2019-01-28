@@ -4,11 +4,42 @@ import LotteryOrderApi from "../http/api/LotteryOrderApi";
 
 //数据处理utils
 class DataUtils {
+
+  createLotteryChildChooseDataForLotteryEntities(lotteryEntities) {
+    if (lotteryEntities) {
+      for (let i = 0; i < lotteryEntities.length; i++) {
+        let tempLotteryEntity = lotteryEntities[i];
+        this.createLotteryChildChooseDataForLotteryEntity(tempLotteryEntity);
+      }
+    }
+  }
+
+  createLotteryChildChooseDataForLotteryEntity(lotteryEntity) {
+    if (lotteryEntity) {
+      let tempLotteryChildClassEntities = lotteryEntity.lotteryChildClassEntities;
+      for (let i = 0; i < tempLotteryChildClassEntities.length; i++) {
+        let tempLotteryChildEntity = tempLotteryChildClassEntities[i];
+        this.createLotteryChildChooseDataForLotteryChildClassEntity(tempLotteryChildEntity);
+      }
+    }
+  }
+
+  createLotteryChildChooseDataForLotteryChildClassEntity(lotteryChildClassEntity) {
+    if (lotteryChildClassEntity) {
+      let tempLotteryChildEntities = lotteryChildClassEntity.lotteryChildList;
+      for (let i = 0; i < tempLotteryChildEntities.length; i++) {
+        let tempLotteryChildEntity = tempLotteryChildEntities[i];
+        tempLotteryChildEntity.orderList = this.createLotteryChildChooseDataForLotteryChildEntity(tempLotteryChildEntity);
+
+      }
+    }
+  }
+
   /**
    *
    * @param lotteryChildEntity
    */
-  createLotteryChildChooseData(lotteryChildEntity) {
+  createLotteryChildChooseDataForLotteryChildEntity(lotteryChildEntity) {
     let duplexNum = lotteryChildEntity.lotteryChildDuplexNum;
     let result = []
     for (let i = 0; i < duplexNum; i++) {
@@ -45,6 +76,9 @@ class DataUtils {
   }
 
   computeOrderNumForOrderListByNormal(lotteryItemEntitiesArr) {
+    if (!lotteryItemEntitiesArr) {
+      return 0;
+    }
     let count = 0;
     for (let i = 0; i < lotteryItemEntitiesArr.length; i++) {
       let lotteryItemEntities = lotteryItemEntitiesArr[i];
@@ -54,6 +88,9 @@ class DataUtils {
   }
 
   computeOrderNumForOrderListByPosition(lotteryItemEntitiesArr) {
+    if (!lotteryItemEntitiesArr) {
+      return 0;
+    }
     let count = 0;
     for (let i = 0; i < lotteryItemEntitiesArr.length; i++) {
       let lotteryItemEntities = lotteryItemEntitiesArr[i];
@@ -63,6 +100,9 @@ class DataUtils {
   }
 
   computeOrderNumForOrderListByDuplex(lotteryItemEntitiesArr) {
+    if (!lotteryItemEntitiesArr) {
+      return 0
+    }
     let count = 1;
     for (let i = 0; i < lotteryItemEntitiesArr.length; i++) {
       let lotteryItemEntities = lotteryItemEntitiesArr[i];
@@ -108,7 +148,6 @@ class DataUtils {
       }
       if (tempItemValues && tempItemValues.length > 0) {
         let tempItemsResult = tempItemValues.join(",");
-        console.log(tempItemsResult)
         tempLotteryValue.push(tempItemsResult);
       } else {
         tempLotteryValue.push("");

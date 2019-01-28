@@ -1,6 +1,7 @@
 <template>
-  <div class="global-flex-row-content-start-items-center">
-    <v-lottery-menu-item-view v-for="(item,index) in lotteryEntity.lotteryChilds" :lotteryChildEntity="item"
+  <div class="global-flex-row-content-start-items-center" v-if="lotteryEntity">
+    <v-lottery-menu-item-view v-for="(item,index) in lotteryEntity.lotteryChildClassEntities"
+                              :lotteryChildClassEntity="item"
                               :key="index"
                               :lotteryMenuIndex="index" :selectedIndex="selectedIndex"
                               :changeMenuIndexCallback="changeMenuIndexCallback"/>
@@ -45,7 +46,7 @@
 
     },
     props: {
-      lotteryEntity: {},
+      lotteryEntity: null,
       selectedIndex: 0,
       changeMenuIndexCallback: Function,
     },
@@ -53,7 +54,8 @@
       'v-lottery-menu-item-view': LotteryMenuItemView,
     }
     ,
-    methods: {}
+    methods: {},
+
   }
 </script>
 

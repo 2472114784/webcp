@@ -24,7 +24,7 @@
         label="开奖号码">
       </el-table-column>
       <el-table-column
-        prop="lotteryValue"
+        prop="lotteryValueShow"
         label="选择">
       </el-table-column>
       <el-table-column

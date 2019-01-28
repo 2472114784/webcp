@@ -6,10 +6,11 @@
       <v-lottery-class-item style="height: 150pt" v-for="item in [1,2,3,4]"/>
     </div>-->
     <v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"
-                    :changeMenuIndexCallback="changeMenuIndexCallback" :selectedIndex="selectedIndex"/>
+                    :changeMenuIndexCallback="changeMenuIndexCallback"
+                    :selectedIndex="selectedIndexForLotteryChildClassEntity"/>
     <div class="global-flex-row-content-start">
       <div class="global-flex-column-content-start ball-container">
-        <div id="balls">
+        <div id="balls" v-if="lotteryChildEntity">
           <v-betballs v-for="(item,index) in this.lotteryChildEntity.orderList" :lotteryBalls="item" :key="index"/>
         </div>
         <div class="global-flex-row-content-start-items-center">
@@ -46,8 +47,10 @@
     data() {
       return {
         lotteryEntity: null,
+        lotteryChildClassEntity: null,
         lotteryChildEntity: null,
-        selectedIndex: 0,
+        selectedIndexForLotteryChildClassEntity: 0,
+        selectedIndexForLotteryChildEntity: 0,
         unitType: TYPE_YUAN,
         num: 1,
       }
@@ -66,9 +69,15 @@
     },
     computed: {
       getOrderNum: function () {
+        if (!this.lotteryChildEntity) {
+          return 0;
+        }
         return dataUtils.computeOrderNumForLotteryChildEntity(this.lotteryChildEntity)
       },
       getTotalMoney: function () {
+        if (!this.lotteryChildEntity) {
+          return 0;
+        }
         let scale = 1.0;
         switch (this.unitType) {
           case TYPE_YUAN:
@@ -90,29 +99,24 @@
     methods: {
       http_lottery: function () {
         this.$http(LotteryOrderApi.getLotteryById(300000000)).then(data => {
-
           this.lotteryEntity = data;
-          console.log("data", data);
-          let lotteryChilds = this.lotteryEntity.lotteryChildClassEntities[0].lotteryChildList;
-          for (let i = 0; i < lotteryChilds.length; i++) {
-            this.handlerLotteryChildEntity(lotteryChilds[i]);
-            if (i === this.selectedIndex) {
-              this.lotteryChildEntity = lotteryChilds[i];
-            }
-          }
+          dataUtils.createLotteryChildChooseDataForLotteryEntity(this.lotteryEntity);
+          this.lotteryChildClassEntity = this.lotteryEntity.lotteryChildClassEntities[this.selectedIndexForLotteryChildClassEntity];
+          this.lotteryChildEntity = this.lotteryChildClassEntity.lotteryChildList[this.selectedIndexForLotteryChildEntity];
+
+          console.log("http结果数据处理", this.lotteryEntity, this.lotteryChildClassEntity, this.lotteryChildEntity)
         })
       },
-      handlerLotteryChildEntity: function (lotteryChildEntity) {
-        let orderList = dataUtils.createLotteryChildChooseData(lotteryChildEntity);
-        lotteryChildEntity.orderList = orderList;
-      },
-      changeMenuIndexCallback: function (index) {
+
+      changeMenuIndexCallback: function (index, lotteryChildClassEntity) {
         if (typeof (index) == "undefined") {
           return;
         }
-        this.selectedIndex = index;
-        this.lotteryChildEntity = this.lotteryEntity.lotteryChilds[this.selectedIndex];
-        console.log('index', index)
+        this.selectedIndexForLotteryChildClassEntity = index;
+        this.selectedIndexForLotteryChildEntity = 0;
+        this.lotteryChildClassEntity = lotteryChildClassEntity;
+        this.lotteryChildEntity = this.lotteryChildClassEntity.lotteryChildList[this.selectedIndexForLotteryChildEntity];
+        console.log('index', index, lotteryChildClassEntity)
       },
       numChangeCallback: function (num) {
         this.num = num;
