@@ -8,6 +8,9 @@
     <v-lottery-menu class="global-flex-row-content-start global-layout-width" :lotteryEntity="lotteryEntity"
                     :changeMenuIndexCallback="changeMenuIndexCallback"
                     :selectedIndex="selectedIndexForLotteryChildClassEntity"/>
+    <v-lottery-child-menu class="global-flex-row-content-start global-layout-width"
+                          :lotteryChildClassEntity="lotteryChildClassEntity"
+                          :onClickCallback="onLotteryChildChangeCallBack"/>
     <div class="global-flex-row-content-start">
       <div class="global-flex-column-content-start ball-container">
         <div id="balls" v-if="lotteryChildEntity">
@@ -21,6 +24,7 @@
           <el-button type="primary" @click="commitOrder">快速投注</el-button>
           <el-button type="primary" @click="addOrder">添加号码</el-button>
         </div>
+        <v-lottery-pre-order :createOrderEntities="createOrderEntities"/>
       </div>
       <v-lottery-result/>
     </div>
@@ -42,6 +46,9 @@
   import LotteryClassItemView from '../../../../lottery/lotteryClassView/LotteryClassItemView'
   import IMModule from '../../../../../common/im/IMModule'
   import RegisterView from '../../../../login/register/RegisterView'
+  import LotteryChildMenuView from "./LotteryChildMenuView";
+  import LotteryPreOrderView from "./LotteryPreOrderView";
+
 
   export default {
     data() {
@@ -49,6 +56,7 @@
         lotteryEntity: null,
         lotteryChildClassEntity: null,
         lotteryChildEntity: null,
+        createOrderEntities: [],
         selectedIndexForLotteryChildClassEntity: 0,
         selectedIndexForLotteryChildEntity: 0,
         unitType: TYPE_YUAN,
@@ -66,6 +74,8 @@
       'v-num': NumView,
       'v-lottery-class-item': LotteryClassItemView,
       'v-register': RegisterView,
+      'v-lottery-child-menu': LotteryChildMenuView,
+      'v-lottery-pre-order': LotteryPreOrderView,
     },
     computed: {
       getOrderNum: function () {
@@ -98,7 +108,7 @@
     },
     methods: {
       http_lottery: function () {
-        this.$http(LotteryOrderApi.getLotteryById(300000000)).then(data => {
+        this.$http(LotteryOrderApi.getLotteryById(100000000)).then(data => {
           this.lotteryEntity = data;
           dataUtils.createLotteryChildChooseDataForLotteryEntity(this.lotteryEntity);
           this.lotteryChildClassEntity = this.lotteryEntity.lotteryChildClassEntities[this.selectedIndexForLotteryChildClassEntity];
@@ -118,6 +128,11 @@
         this.lotteryChildEntity = this.lotteryChildClassEntity.lotteryChildList[this.selectedIndexForLotteryChildEntity];
         console.log('index', index, lotteryChildClassEntity)
       },
+      onLotteryChildChangeCallBack: function (lotteryChildEntity) {
+        if (lotteryChildEntity) {
+          this.lotteryChildEntity = lotteryChildEntity;
+        }
+      },
       numChangeCallback: function (num) {
         this.num = num;
       },
@@ -128,8 +143,8 @@
        * 提交订单
        */
       commitOrder: function () {
-        let commitOrderData = dataUtils.createCommitOrderData(this.num, this.lotteryChildEntity);
-        console.log("提交数据", [commitOrderData])
+        let commitOrderData = dataUtils.createCommitOrderData(this.lotteryEntity.lotteryNo, this.num, this.lotteryChildEntity);
+        console.log("提交数据", [commitOrderData]);
         this.$http(LotteryOrderApi.createLotteryOrder([commitOrderData])).then(data => {
           console.log("提交订单返回数据", data);
         })
@@ -138,7 +153,10 @@
        * 添加订单
        */
       addOrder: function () {
-        IMModule.connect();
+        let commitOrderData = dataUtils.createCommitOrderData(this.lotteryEntity.lotteryNo, this.num, this.lotteryChildEntity);
+        if (commitOrderData) {
+          this.createOrderEntities.push(commitOrderData);
+        }
       }
 
 

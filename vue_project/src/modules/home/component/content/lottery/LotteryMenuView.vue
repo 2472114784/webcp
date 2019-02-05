@@ -15,33 +15,7 @@
     name: "LotteryMenuView",
     data() {
       return {
-        lotteryMenuData: [
-          {
-            name: '五星',
-            index: 0,
 
-          },
-          {
-            name: '四星',
-            index: 1,
-
-          },
-          {
-            name: '三星',
-            index: 2,
-
-          },
-          {
-            name: '二星',
-            index: 3,
-
-          },
-          {
-            name: '一星',
-            index: 4,
-
-          }
-        ],
       }
 
     },

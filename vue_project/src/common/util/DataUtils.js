@@ -1,5 +1,5 @@
 import cloneDeep from 'clone-deep';
-import {ORDER_TYPE_NORMAL, ORDER_TYPE_DUPLEX, ORDER_TYPE_POSITION} from '../http/api/LotteryOrderApi'
+import * as LotteryOrderApiAll from '../http/api/LotteryOrderApi'
 import LotteryOrderApi from "../http/api/LotteryOrderApi";
 
 //数据处理utils
@@ -40,14 +40,24 @@ class DataUtils {
    * @param lotteryChildEntity
    */
   createLotteryChildChooseDataForLotteryChildEntity(lotteryChildEntity) {
-    let duplexNum = lotteryChildEntity.lotteryChildDuplexNum;
-    let result = []
-    for (let i = 0; i < duplexNum; i++) {
-      result[i] = cloneDeep(lotteryChildEntity.lotteryItemEntityList)
+    if (lotteryChildEntity) {
+      let result = [];
+      switch (lotteryChildEntity.lotteryChildType) {
+        case LotteryOrderApiAll.LOTTERY_CHILD_TYPE_NORMAL:
+          result[0] = cloneDeep(lotteryChildEntity.lotteryItemEntityList);
+          break;
+        case LotteryOrderApiAll.LOTTERY_CHILD_TYPE_POSITION:
+        case LotteryOrderApiAll.LOTTERY_CHILD_TYPE_DUPLEX:
+          let duplexNum = lotteryChildEntity.lotteryChildDuplexNum;
+          for (let i = 0; i < duplexNum; i++) {
+            result[i] = cloneDeep(lotteryChildEntity.lotteryItemEntityList)
+          }
+          break;
+      }
+      return result;
     }
-    console.log("result", result)
-    return result;
   }
+
 
   // computeOrderNumForLotteryEntity(lotteryEntity) {
   //   let count = 0;
@@ -62,13 +72,13 @@ class DataUtils {
   computeOrderNumForLotteryChildEntity(lotteryChildEntity) {
     let count = 0;
     switch (lotteryChildEntity.lotteryChildType) {
-      case ORDER_TYPE_NORMAL:
+      case LotteryOrderApiAll.ORDER_TYPE_NORMAL:
         count = this.computeOrderNumForOrderListByNormal(lotteryChildEntity.orderList);
         break;
-      case ORDER_TYPE_POSITION:
+      case LotteryOrderApiAll.ORDER_TYPE_POSITION:
         count = this.computeOrderNumForOrderListByPosition(lotteryChildEntity.orderList);
         break;
-      case ORDER_TYPE_DUPLEX:
+      case LotteryOrderApiAll.ORDER_TYPE_DUPLEX:
         count = this.computeOrderNumForOrderListByDuplex(lotteryChildEntity.orderList);
         break;
     }
@@ -132,30 +142,46 @@ class DataUtils {
    * @param money
    * @param lotteryChildEntity
    */
-  createCommitOrderData(money, lotteryChildEntity) {
+  createCommitOrderData(lotteryNo, money, lotteryChildEntity) {
     console.log("需处理的数据", lotteryChildEntity);
     let orderValue;
+    let orderValueShow;
     let orderList = lotteryChildEntity.orderList;
     let tempLotteryValue = [];
+    let tempLotteryValueShow = [];
     for (let i = 0; i < orderList.length; i++) {
       let lotteryItemEntities = orderList[i];
       let tempItemValues = [];
+      let tempItemValuesShow = [];
       for (let j = 0; j < lotteryItemEntities.length; j++) {
         let lotteryItemEntity = lotteryItemEntities[j];
         if (lotteryItemEntity.selected) {
           tempItemValues.push(lotteryItemEntity.lotteryItemId);
+          tempItemValuesShow.push(lotteryItemEntity.lotteryItemName);
         }
       }
       if (tempItemValues && tempItemValues.length > 0) {
         let tempItemsResult = tempItemValues.join(",");
         tempLotteryValue.push(tempItemsResult);
+
+        let tempItemsShowResult = tempItemValuesShow.join(",");
+        tempLotteryValueShow.push(tempItemsShowResult);
       } else {
         tempLotteryValue.push("");
+        tempLotteryValueShow.push("");
       }
     }
     orderValue = tempLotteryValue.join("|");
+    orderValueShow = tempLotteryValueShow.join("|");
 
-    return {money: money, lotteryChildId: lotteryChildEntity.lotteryChildId, lotteryValue: orderValue}
+    return {
+      money: money,
+      lotteryChildId: lotteryChildEntity.lotteryChildId,
+      lotteryValue: orderValue,
+      lotteryValueShow: orderValueShow,
+      lotteryChildName: lotteryChildEntity.lotteryChildName,
+      lotteryNo: lotteryNo
+    }
   }
 
 }
