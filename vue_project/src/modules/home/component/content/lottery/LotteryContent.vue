@@ -108,7 +108,7 @@
     },
     methods: {
       http_lottery: function () {
-        this.$http(LotteryOrderApi.getLotteryById(100000000)).then(data => {
+        this.$http(LotteryOrderApi.getLotteryById(300000000)).then(data => {
           this.lotteryEntity = data;
           dataUtils.createLotteryChildChooseDataForLotteryEntity(this.lotteryEntity);
           this.lotteryChildClassEntity = this.lotteryEntity.lotteryChildClassEntities[this.selectedIndexForLotteryChildClassEntity];

@@ -4,7 +4,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 import TimeManager from '../serverTime/TimeManager'
 
 axios.defaults.timeout = 5000;
-axios.defaults.baseURL = 'http://localhost:8088'; //填写域名
+axios.defaults.baseURL = 'http://47.75.241.94:8080/cpapi'; //填写域名
+// axios.defaults.baseURL = 'http://localhost:8081/cp_war'; //填写域名
 
 //http request 拦截器
 axios.interceptors.request.use(
